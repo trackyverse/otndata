@@ -20,9 +20,7 @@
   batch_size = NULL,
   type
 ) {
-  if (is.null(otn_global$SESSION_TOKEN)) {
-    cli::cli_abort("Please log into the data portal.")
-  }
+  is_logged_in()
 
   project_endpoint <- paste(
     "/data/repository",

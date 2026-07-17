@@ -10,9 +10,7 @@
 #'    * [Content manipulation](https://6.docs.plone.org/plone.restapi/docs/source/usage/content.html)
 #'    * [Deserialization](https://6.docs.plone.org/plone.restapi/docs/source/usage/serialization.html#upload-deserialization)
 otn_upload <- function(file_path, project) {
-  if (is.null(otn_global$SESSION_TOKEN)) {
-    cli::cli_abort("Please log into the data portal.")
-  }
+  is_logged_in()
 
   # Fail quickly if file is too large
   file_size <- file.info(file_path)$size
