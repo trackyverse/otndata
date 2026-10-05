@@ -123,7 +123,7 @@ otn_set_credentials <- function(network, temporary = FALSE, overwrite = FALSE) {
 
     cli::cli_alert_info(
       'Your OTN credentials have been stored in your .Renviron and can be accessed
-      by Sys.getenv("OTN_USER.{network code}") or Sys.getenv("OTN_PASS.{network code}").
+      by Sys.getenv("OTN_USER.{network}") or Sys.getenv("OTN_PASS.{network}").
       \nTo use now, restart R or run `readRenviron("~/.Renviron")`.'
     )
   }
