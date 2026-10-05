@@ -37,7 +37,8 @@ otn_download <- function(files = NULL, url = NULL, outdir = '.') {
   }
 
   if (!is.null(files)) {
-    out_path <- file.path(outdir, files$name) |>
+    out_path <- file.path(outdir, basename(files$url)) |>
+      gsub("-parquet$", ".parquet", x = _) |>
       path.expand()
 
     responses <- lapply(
