@@ -48,7 +48,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">.otn_files</span><span class="op">(</span><span class="va">project</span>, since <span class="op">=</span> <span class="cn">NULL</span>, batch_size <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">type</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">.otn_files</span><span class="op">(</span><span class="va">project</span>, text <span class="op">=</span> <span class="cn">NULL</span>, since <span class="op">=</span> <span class="cn">NULL</span>, batch_size <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">type</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -57,6 +57,11 @@
 
 <dl><dt id="arg-project">project<a class="anchor" aria-label="anchor" href="#arg-project"></a></dt>
 <dd><p>Character. The project code.</p></dd>
+
+
+<dt id="arg-text">text<a class="anchor" aria-label="anchor" href="#arg-text"></a></dt>
+<dd><p>Character. Text to search for in the file name/title. See Details
+for more information.</p></dd>
 
 
 <dt id="arg-since">since<a class="anchor" aria-label="anchor" href="#arg-since"></a></dt>
@@ -74,13 +79,25 @@ to return.</p></dd>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Filtering by <code>text</code> uses Plone's full-text search syntax rather than regular
+expressions or glob patterns:</p><ul><li><p><strong>Case Insensitivity:</strong> Searching is case-insensitive.</p></li>
+<li><p><strong>Word Matching:</strong> Space-separated words (or elements in a character vector)
+are treated as an unordered <code>AND</code> search. For example, <code>"detections parquet"</code>
+or <code>c("detections", "parquet")</code> matches any title containing both words in any order.</p></li>
+<li><p><strong>Partial Matching:</strong> Use trailing wildcards (<code>*</code>) for word prefixes
+(e.g., <code>"det* parquet"</code>). Leading wildcards (e.g., <code>"*data"</code>) are not supported.</p></li>
+<li><p><strong>Exact Phrases:</strong> Wrap words in double quotes to require exact word ordering:
+<code>'"detections parquet"'</code> or <code>"\"detections parquet\""</code>.</p></li>
+</ul></div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index">
 <ul><li><p>Plone REST API documentation:</p><ul><li><p><a href="https://6.docs.plone.org/plone.restapi/docs/source/endpoints/querystringsearch.html" class="external-link">Querystring Search</a>,
-triggered when using the "<code>since</code>" argument.
+triggered when using the "<code>text</code>" or "<code>since</code>" arguments.
 <a href="https://6.docs.plone.org/plone.restapi/docs/source/endpoints/querystring.html" class="external-link">Query operations are listed here.</a>.</p></li>
 <li><p><a href="https://6.docs.plone.org/plone.restapi/docs/source/endpoints/searching.html" class="external-link">Search</a>,
-a simpler search used when the "<code>since</code>" argument is NULL.</p></li>
+a simpler search used when the "<code>text</code>" and "<code>since</code>" arguments are NULL.</p></li>
 </ul></li>
 </ul></div>
     </div>

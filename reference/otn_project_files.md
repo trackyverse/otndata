@@ -8,7 +8,7 @@ not a public project.
 ## Usage
 
 ``` r
-otn_project_files(project, since = NULL, batch_size = 25)
+otn_project_files(project, text = NULL, since = NULL, batch_size = 25)
 ```
 
 ## Arguments
@@ -16,6 +16,11 @@ otn_project_files(project, since = NULL, batch_size = 25)
 - project:
 
   Character. The project code.
+
+- text:
+
+  Character. Text to search for in the file name/title. See Details for
+  more information.
 
 - since:
 
