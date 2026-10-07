@@ -4,10 +4,13 @@
 \alias{.otn_files}
 \title{Return files associated with an OTN project.}
 \usage{
-.otn_files(project, since = NULL, batch_size = NULL, type)
+.otn_files(project, text = NULL, since = NULL, batch_size = NULL, type)
 }
 \arguments{
 \item{project}{Character. The project code.}
+
+\item{text}{Character. Text to search for in the file name/title. See Details
+for more information.}
 
 \item{since}{Character. Filter for files modified since this date
 (YYYY-MM-DD format).}
@@ -20,15 +23,29 @@ to return.}
 \description{
 Return files associated with an OTN project.
 }
+\details{
+Filtering by \code{text} uses Plone's full-text search syntax rather than regular
+expressions or glob patterns:
+\itemize{
+\item \strong{Case Insensitivity:} Searching is case-insensitive.
+\item \strong{Word Matching:} Space-separated words (or elements in a character vector)
+are treated as an unordered \code{AND} search. For example, \code{"detections parquet"}
+or \code{c("detections", "parquet")} matches any title containing both words in any order.
+\item \strong{Partial Matching:} Use trailing wildcards (\code{*}) for word prefixes
+(e.g., \code{"det* parquet"}). Leading wildcards (e.g., \code{"*data"}) are not supported.
+\item \strong{Exact Phrases:} Wrap words in double quotes to require exact word ordering:
+\code{'"detections parquet"'} or \code{"\"detections parquet\""}.
+}
+}
 \seealso{
 \itemize{
 \item Plone REST API documentation:
 \itemize{
 \item \href{https://6.docs.plone.org/plone.restapi/docs/source/endpoints/querystringsearch.html}{Querystring Search},
-triggered when using the "\code{since}" argument.
+triggered when using the "\code{text}" or "\code{since}" arguments.
 \href{https://6.docs.plone.org/plone.restapi/docs/source/endpoints/querystring.html}{Query operations are listed here.}.
 \item \href{https://6.docs.plone.org/plone.restapi/docs/source/endpoints/searching.html}{Search},
-a simpler search used when the "\code{since}" argument is NULL.
+a simpler search used when the "\code{text}" and "\code{since}" arguments are NULL.
 }
 }
 }

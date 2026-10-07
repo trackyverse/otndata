@@ -4,10 +4,13 @@
 \alias{otn_project_files}
 \title{List OTN project files.}
 \usage{
-otn_project_files(project, since = NULL, batch_size = 25)
+otn_project_files(project, text = NULL, since = NULL, batch_size = 25)
 }
 \arguments{
 \item{project}{Character. The project code.}
+
+\item{text}{Character. Text to search for in the file name/title. See Details
+for more information.}
 
 \item{since}{Character. Filter for files modified since this date
 (YYYY-MM-DD format).}
