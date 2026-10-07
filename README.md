@@ -75,74 +75,67 @@ library(otndata)
 otn_list_species() |>
   head()
 #>           scientificname           commonname
-#> 1          Abramis brama         common bream
+#> 1          Abramis brama                bream
 #> 2 Acanthocybium solandri                wahoo
-#> 3    Acanthurus bahianus       cirujano pardo
-#> 4     Acanthurus blochii ringtail surgeonfish
-#> 5   Acanthurus chirurgus           doctorfish
-#> 6   Acanthurus coeruleus            blue tang
+#> 3             Acanthurus       Chirurgien sp.
+#> 4    Acanthurus bahianus       cirujano pardo
+#> 5     Acanthurus blochii ringtail surgeonfish
+#> 6   Acanthurus chirurgus           doctorfish
 
 # Try a different server
 otn_list_projects(network = "act") |>
   head()
 #>   node collectioncode country longitude latitude
-#> 1  ACT        RUSHARK     USA  -73.8185  38.0705
-#> 2  ACT          BTW1A     USA  -73.8150  38.0700
-#> 3  ACT         REVCOD     USA  -73.8185  38.0705
-#> 4  ACT      RAPPTRIBE     USA  -73.8185  38.0705
-#> 5  ACT         RIWFCC     USA  -73.8185  38.0705
-#> 6  ACT      INVENERGY     USA  -73.8185  38.0705
-#>                                     shortname
-#> 1                      RUCOOL HMS Shark Study
-#> 2          BTWaves Caribbean Acoustic Tagging
-#> 3                                  Orsted Cod
-#> 4 Rappahannock Tribe Rappahannock River Array
-#> 5  Narragansett Bay Cable Corridor Monitoring
-#> 6                        Invenergy Monitoring
-#>                                                                                                                              longname
-#> 1 Investigating the movements and distribution of highly migratory shark species in the U.S. Northeast Shelf Large Marine Environment
-#> 2                                                                                 Beneath the Waves acoustic tagging in the Caribbean
-#> 3                                                                                                     Orsted Wind Farm Cod Monitoring
-#> 4                                                                                                  Rappahannock River Telemetry Array
-#> 5                                                                                Narragansett Bay Wind Farm Cable Corridor Monitoring
-#> 6                                                                                                          Invenergy Whale Monitoring
-#>         ocean                                                  website
-#> 1 NW ATLANTIC                                                     <NA>
-#> 2 NW ATLANTIC             https://www.beneaththewaves.org/initiatives/
-#> 3 NW ATLANTIC                        https://rucool.marine.rutgers.edu
-#> 4 NW ATLANTIC https://www.rappahannocktribe.org/environmentalservices/
-#> 5 NW ATLANTIC                                                     <NA>
-#> 6 NW ATLANTIC                        https://rucool.marine.rutgers.edu
-#>   datacenter_infourl
-#> 1                 NA
-#> 2                 NA
-#> 3                 NA
-#> 4                 NA
-#> 5                 NA
-#> 6                 NA
-#>                                                                     institutionname
-#> 1                      Rutgers University Department of Marine and Coastal Sciences
-#> 2                                Mid-Atlantic Acoustic Telemetry Observation System
-#> 3                      Rutgers University Department of Marine and Coastal Sciences
-#> 4                                                                Rappahannock Tribe
-#> 5 Rhode Island Department of Environmental Management, Division of Marine Fisheries
-#> 6                      Rutgers University Department of Marine and Coastal Sciences
+#> 1  ACT        NJWPEFH     USA -75.46144 39.60147
+#> 2  ACT     SBUSOMASCO     USA -73.67922 40.47010
+#> 3  ACT        NJDEPSB     USA -74.26016 39.60989
+#> 4  ACT          WTAPS     USA -76.21810 37.34658
+#> 5  ACT     ASIPORBEAG     USA -73.81850 38.07050
+#> 6  ACT         SBURAA     USA -73.81850 38.07050
+#>                               shortname
+#> 1        AKRF Sand-Wave Habitat Phase 1
+#> 2 Dusky Shark Habitat Use and Migration
+#> 3                   NJ DEP striped bass
+#> 4                      WTAPS Blue Crabs
+#> 5           ASI - Porbeagle Shark Study
+#> 6                  SBU HRF Sturgeon RAA
+#>                                                                                                                                                       longname
+#> 1 Compensatory Mitigation for the Loss of Sand-Wave Habitat due to Dredging at the New Jersey Wind Port – Phase 1 - at Artificial Island on the Delaware River
+#> 2                                                                                                                        Dusky Shark Habitat Use and Migration
+#> 3                                                                     Spatial and temporal movements of Atlantic striped bass (Morone saxatilis) in New Jersey
+#> 4                                                          Blue Crab Overwintering and placement of dredge material in the Wolf Trap Alternate Placement Site.
+#> 5                                                                                  This study involves the porbeagle shark in New England and adjacent waters.
+#> 6                                                 Defining the ecological and conservation importance of the Rockaway Atlantic Sturgeon aggregation area (RAA)
+#>         ocean                               website datacenter_infourl
+#> 1 NW ATLANTIC                                  <NA>                 NA
+#> 2 NW ATLANTIC                                  <NA>                 NA
+#> 3 NW ATLANTIC                                  <NA>                 NA
+#> 4 NW ATLANTIC                                  <NA>                 NA
+#> 5 NW ATLANTIC http://www.atlanticsharkinstitute.org                 NA
+#> 6 NW ATLANTIC                                  <NA>                 NA
+#>                                           institutionname
+#> 1                                               AKRF Inc.
+#> 2                                  Stony Brook University
+#> 3       New Jersey Department of Environmental Protection
+#> 4 University of Maryland Center for Environmental Science
+#> 5                                Atlantic Shark Institute
+#> 6                                  Stony Brook University
 
 otn_list_stats(network = "otn_devel")
 #> $project_count
-#> [1] 1662
+#> [1] 1718
 #> 
 #> $contributor_count
-#> [1] 2501
+#> [1] 2583
 #> 
 #> $inst_count
-#> [1] 479
+#> [1] 491
 #> 
 #> $species_count
-#> [1] 468
+#> [1] 476
 #> 
 #> $rcvr_count
-#> [1] 2814
+#> [1] 3529
 ```
 
 You can also query projects according to code, country of origin,
@@ -152,33 +145,33 @@ species, institution, node, or point of contact.
 otn_search_node("ACT") |>
   head()
 #>   node collectioncode country longitude latitude
-#> 1  ACT        ASISEAL     USA  -73.8185  38.0705
-#> 2  ACT         SBURAA     USA  -73.8185  38.0705
-#> 3  ACT     WRWASTBASS     USA  -73.8185  38.0705
-#> 4  ACT      WTGHABASS     USA  -73.8185  38.0705
-#> 5  ACT       NCBONITO     USA  -73.8185  38.0705
-#> 6  ACT          CT008     USA  -73.8185  38.0705
-#>                                   shortname
-#> 1 ASI - Seal Movement in New England Waters
-#> 2                      SBU HRF Sturgeon RAA
-#> 3                   WRWA/ SBI Striped Bass 
-#> 4     WTGHA Menemsha Complex Striped Bass  
-#> 5     NC Atlantic Bonito Tagging - NCSU/TNC
-#> 6                 CT DEEP Array (2022-2026)
-#>                                                                                                                      longname
-#> 1 Understanding the movement ecology of rehabilitated seals in New England waters and potential interaction with white sharks
-#> 2                Defining the ecological and conservation importance of the Rockaway Atlantic Sturgeon aggregation area (RAA)
-#> 3                                             Initial assessment of seasonal fidelity of striped bass in the Westport River. 
-#> 4                                                              Striped Bass Site Attachment and Habitat Use in Menemsha Pond 
-#> 5                                                                Tracking coastwide movements of Atlantic bonito, Sarda sarda
-#> 6                               CT DEEP array of VEMCO receivers in Long Island Sound and lower Connecticut River, 2022-2026.
-#>         ocean                               website
-#> 1 NW ATLANTIC http://www.atlanticsharkinstitute.org
-#> 2 NW ATLANTIC                                  <NA>
-#> 3 NW ATLANTIC                                  <NA>
-#> 4 NW ATLANTIC                                  <NA>
-#> 5 NW ATLANTIC                                  <NA>
-#> 6 NW ATLANTIC                                  <NA>
+#> 1  ACT        CTR0204     USA -72.64802 42.20387
+#> 2  ACT          CBASR     USA -76.51859 38.88313
+#> 3  ACT          CBCRP     USA -76.54500 38.88000
+#> 4  ACT       MDWEAMAM     USA -73.81850 38.07050
+#> 5  ACT        DEARRAY     USA -73.81500 38.07000
+#> 6  ACT       SBUEPSRW     USA -73.81850 38.07050
+#>                                shortname
+#> 1          CT River Sturgeon (2002-2004)
+#> 2           SERC Atlantic Stingray Study
+#> 3                 SERC Common Carp Study
+#> 4    UMCES BOEM Marine Mammal Monitoring
+#> 5 Delaware Division of Fish and Wildlife
+#> 6                            SBU Eco-Pod
+#>                                                                                                                               longname
+#> 1                                                                    Seasonal Movements of Shortnose Sturgeon in the Connecticut River
+#> 2                                                                                          Atlantic Stingray Habitat Use and Migration
+#> 3                                                                                           Common Carp Habitat Use in Chesapeake Bay.
+#> 4 Add-on to: Determining Habitat Use by Marine Mammals and Ambient Noise Levels Using Passive Acoustic Monitoring Offshore of Maryland
+#> 5                                               Delaware Division of Fish and Wildlife, Delaware Estuary Acoustic Telemetry Monitoring
+#> 6                                                Monitoring copepod prey abundances using bottom-mounted, upward-looking echosounders.
+#>         ocean                                                  website
+#> 1 NW ATLANTIC                                                     <NA>
+#> 2 NW ATLANTIC                                                     <NA>
+#> 3 NW ATLANTIC                                                     <NA>
+#> 4 NW ATLANTIC https://espis.boem.gov/final%20reports/BOEM_2019-018.pdf
+#> 5 NW ATLANTIC                                                     <NA>
+#> 6 NW ATLANTIC                                                     <NA>
 #>              datacenter_infourl
 #> 1 https://matos.asascience.com/
 #> 2 https://matos.asascience.com/
@@ -199,25 +192,25 @@ otn_search_code("tail")
 # This does not accept partial matches
 otn_search_contact("Mike O'Brien")
 #>   node collectioncode country longitude latitude
-#> 1  ACT       NAVYKENN     USA  -69.7800  43.7750
-#> 2  ACT         CBBBMB     USA  -73.8150  38.0700
-#> 3  ACT      TAILWINDS     USA  -73.8185  38.0705
-#> 4  ACT         MAMBON     USA  -73.8185  38.0705
+#> 1  ACT         CBBBMB     USA  -73.8150  38.0700
+#> 2  ACT      TAILWINDS     USA  -73.8185  38.0705
+#> 3  ACT         MAMBON     USA  -73.8185  38.0705
+#> 4  ACT       NAVYKENN     USA  -69.7800  43.7750
 #>                            shortname
-#> 1   Navy Kennebec ME Telemetry Array
-#> 2 UMCES Chesapeake Backbone, Mid-Bay
-#> 3                    UMCES TailWinds
-#> 4                  Mid-Atlantic MBON
+#> 1 UMCES Chesapeake Backbone, Mid-Bay
+#> 2                    UMCES TailWinds
+#> 3                  Mid-Atlantic MBON
+#> 4   Navy Kennebec ME Telemetry Array
 #>                                                                                         longname
-#> 1 Naval Undersea Warfare Center (NUWC) Kennebec River and Offshore Acoustic Telemetry Monitoring
-#> 2                            Building a Mainstem Chesapeake Bay Telemetry Array: Mid-Bay Segment
-#> 3          TailWinds: Team for Assessing Impacts to Living resources from offshore WIND turbineS
-#> 4                Mid-Atlantic MBON: Dynamic Biodiversity and Telemetry Data for a Changing Coast
+#> 1                            Building a Mainstem Chesapeake Bay Telemetry Array: Mid-Bay Segment
+#> 2          TailWinds: Team for Assessing Impacts to Living resources from offshore WIND turbineS
+#> 3                Mid-Atlantic MBON: Dynamic Biodiversity and Telemetry Data for a Changing Coast
+#> 4 Naval Undersea Warfare Center (NUWC) Kennebec River and Offshore Acoustic Telemetry Monitoring
 #>         ocean                                          website
 #> 1 NW ATLANTIC                                             <NA>
-#> 2 NW ATLANTIC                                             <NA>
-#> 3 NW ATLANTIC                     https://tailwinds.umces.edu/
-#> 4 NW ATLANTIC https://marinebon.org/us-mbon/mid-atlantic-mbon/
+#> 2 NW ATLANTIC                     https://tailwinds.umces.edu/
+#> 3 NW ATLANTIC https://marinebon.org/us-mbon/mid-atlantic-mbon/
+#> 4 NW ATLANTIC                                             <NA>
 #>              datacenter_infourl
 #> 1 https://matos.asascience.com/
 #> 2 https://matos.asascience.com/
@@ -271,24 +264,30 @@ otn_project_files(project = 'tailwinds', batch_size = 5)
 #> 5 2026-06-10 03:55:34 2026-06-10 03:55:34 krichie 751.0 KB File
 
 otn_extract_files(project = 'tailwinds', batch_size = 5)
-#>                                            name description
-#> 1   tailwinds_qualified_detections_2023.parquet            
-#> 2       tailwinds_qualified_detections_2023.zip            
-#> 3   tailwinds_qualified_detections_2024.parquet            
-#> 4       tailwinds_qualified_detections_2024.zip            
-#> 5 tailwinds_unqualified_detections_2023.parquet            
-#>                                                                                                                         url
-#> 1   https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2023-parquet
-#> 2       https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2023.zip
-#> 3   https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2024-parquet
-#> 4       https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2024.zip
-#> 5 https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_unqualified_detections_2023-parquet
+#>                                            name
+#> 1 Detections Mapped to other Trackers (Parquet)
+#> 2              Unqualified Detections (Parquet)
+#> 3   tailwinds_qualified_detections_2023.parquet
+#> 4      Detections Mapped to other Trackers 2023
+#> 5   tailwinds_qualified_detections_2024.parquet
+#>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        description
+#> 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                 These detections have been mapped to animals released by other tracker projects.
+#> 2 These are detections for which we do not know the owner. There may be several reasons for this. One: It is a test or sentinel tag and we have not been informed. Two: It is an ambiguous tag which means we have more than one set of tag metadata which the detection could belong to. Three: We have not received any release metadata for the tag. Four: It is an old style sensor tag and we have not been able to determine the associated pinger id, or even if there should be one, because we do not have the vendor tag specifications.
+#> 3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+#> 4                                                                                                                                                                                                                                                                                                                                                                                                                                                                  These detections have been mapped to animals released by othertracker projects.
+#> 5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+#>                                                                                                                       url
+#> 1      https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections-parquet
+#> 2    https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_unqualified_detections-parquet
+#> 3 https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2023-parquet
+#> 4     https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2023.zip
+#> 5 https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2024-parquet
 #>               created            modified creator     size type
-#> 1 2026-06-12 13:25:31 2026-06-12 13:25:31 krichie 133.0 KB File
-#> 2 2026-06-12 13:25:49 2026-06-12 13:25:50 krichie  95.6 KB File
-#> 3 2026-06-12 13:26:03 2026-06-12 13:26:03 krichie 174.2 KB File
-#> 4 2026-06-12 13:26:19 2026-06-12 13:26:19 krichie 129.7 KB File
-#> 5 2026-06-12 13:26:33 2026-06-12 13:26:33 krichie 602.3 KB File
+#> 1 2026-07-28 14:22:44 2026-07-28 14:22:47  otnbot 347.2 KB File
+#> 2 2026-07-28 14:22:45 2026-07-28 14:22:48  otnbot 148.4 KB File
+#> 3 2026-06-12 13:25:31 2026-06-12 13:25:31 krichie 133.0 KB File
+#> 4 2026-06-12 13:25:49 2026-07-28 14:22:45  otnbot  96.2 KB File
+#> 5 2026-06-12 13:26:03 2026-06-12 13:26:03 krichie 174.2 KB File
 ```
 
 Or, just grab the ones modified more recently using the `since`
@@ -321,27 +320,68 @@ otn_project_files(
 
 otn_extract_files(
   project = 'tailwinds',
-  since = "2026-06-01",
+  since = "2026-07-01",
   batch_size = 5
 )
-#>                                            name description
-#> 1   tailwinds_qualified_detections_2023.parquet            
-#> 2       tailwinds_qualified_detections_2023.zip            
-#> 3   tailwinds_qualified_detections_2024.parquet            
-#> 4       tailwinds_qualified_detections_2024.zip            
-#> 5 tailwinds_unqualified_detections_2023.parquet            
-#>                                                                                                                         url
-#> 1   https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2023-parquet
-#> 2       https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2023.zip
-#> 3   https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2024-parquet
-#> 4       https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2024.zip
-#> 5 https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_unqualified_detections_2023-parquet
+#>                                            name
+#> 1 Detections Mapped to other Trackers (Parquet)
+#> 2              Unqualified Detections (Parquet)
+#> 3      Detections Mapped to other Trackers 2023
+#> 4      Detections Mapped to other Trackers 2024
+#> 5                   Unqualified Detections 2023
+#>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        description
+#> 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                 These detections have been mapped to animals released by other tracker projects.
+#> 2 These are detections for which we do not know the owner. There may be several reasons for this. One: It is a test or sentinel tag and we have not been informed. Two: It is an ambiguous tag which means we have more than one set of tag metadata which the detection could belong to. Three: We have not received any release metadata for the tag. Four: It is an old style sensor tag and we have not been able to determine the associated pinger id, or even if there should be one, because we do not have the vendor tag specifications.
+#> 3                                                                                                                                                                                                                                                                                                                                                                                                                                                                  These detections have been mapped to animals released by othertracker projects.
+#> 4                                                                                                                                                                                                                                                                                                                                                                                                                                                                  These detections have been mapped to animals released by othertracker projects.
+#> 5 These are detections for which we do not know the owner. There may be several reasons for this. One: It is a test or sentinel tag and we have not been informed. Two: It is an ambiguous tag which means we have more than one set of tag metadata which the detection could belong to. Three: We have not received any release metadata for the tag. Four: It is an old style sensor tag and we have not been able to determine the associated pinger id, or even if there should be one, because we do not have the vendor tag specifications.
+#>                                                                                                                     url
+#> 1    https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections-parquet
+#> 2  https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_unqualified_detections-parquet
+#> 3   https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2023.zip
+#> 4   https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2024.zip
+#> 5 https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_unqualified_detections_2023.zip
 #>               created            modified creator     size type
-#> 1 2026-06-12 13:25:31 2026-06-12 13:25:31 krichie 133.0 KB File
-#> 2 2026-06-12 13:25:49 2026-06-12 13:25:50 krichie  95.6 KB File
+#> 1 2026-07-28 14:22:44 2026-07-28 14:22:47  otnbot 347.2 KB File
+#> 2 2026-07-28 14:22:45 2026-07-28 14:22:48  otnbot 148.4 KB File
+#> 3 2026-06-12 13:25:49 2026-07-28 14:22:45  otnbot  96.2 KB File
+#> 4 2026-06-12 13:26:19 2026-07-28 14:22:47  otnbot 131.7 KB File
+#> 5 2026-06-12 13:26:45 2026-07-28 14:22:46  otnbot  52.2 KB File
+```
+
+Your can also text search for only certain files with the `text`
+argument:
+
+``` r
+otn_extract_files(
+  project = 'tailwinds',
+  text = "parquet",
+  batch_size = 5
+)
+#>                                            name
+#> 1 tailwinds_unqualified_detections_2024.parquet
+#> 2 tailwinds_unqualified_detections_2023.parquet
+#> 3   tailwinds_qualified_detections_2024.parquet
+#> 4   tailwinds_qualified_detections_2023.parquet
+#> 5              Unqualified Detections (Parquet)
+#>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        description
+#> 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+#> 2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+#> 3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+#> 4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+#> 5 These are detections for which we do not know the owner. There may be several reasons for this. One: It is a test or sentinel tag and we have not been informed. Two: It is an ambiguous tag which means we have more than one set of tag metadata which the detection could belong to. Three: We have not received any release metadata for the tag. Four: It is an old style sensor tag and we have not been able to determine the associated pinger id, or even if there should be one, because we do not have the vendor tag specifications.
+#>                                                                                                                         url
+#> 1 https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_unqualified_detections_2024-parquet
+#> 2 https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_unqualified_detections_2023-parquet
+#> 3   https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2024-parquet
+#> 4   https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2023-parquet
+#> 5      https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_unqualified_detections-parquet
+#>               created            modified creator     size type
+#> 1 2026-06-12 13:26:59 2026-06-12 13:26:59 krichie  62.7 KB File
+#> 2 2026-06-12 13:26:33 2026-06-12 13:26:33 krichie 602.3 KB File
 #> 3 2026-06-12 13:26:03 2026-06-12 13:26:03 krichie 174.2 KB File
-#> 4 2026-06-12 13:26:19 2026-06-12 13:26:19 krichie 129.7 KB File
-#> 5 2026-06-12 13:26:33 2026-06-12 13:26:33 krichie 602.3 KB File
+#> 4 2026-06-12 13:25:31 2026-06-12 13:25:31 krichie 133.0 KB File
+#> 5 2026-07-28 14:22:45 2026-07-28 14:22:48  otnbot 148.4 KB File
 ```
 
 ## Download files
@@ -356,7 +396,7 @@ otn_extract_files(
   batch_size = 1
 ) |>
   otn_download()
-#> ℹ Files saved to ./tailwinds_qualified_detections_2023.parquet.
+#> ℹ Files saved to ./tailwinds_qualified_detections.parquet.
 ```
 
 Or download directly via its URL:

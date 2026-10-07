@@ -116,7 +116,17 @@ otn_project_files(
 
 otn_extract_files(
   project = 'tailwinds',
-  since = "2026-06-01",
+  since = "2026-07-01",
+  batch_size = 5
+)
+```
+
+Your can also text search for only certain files with the `text` argument:
+
+```{r}
+otn_extract_files(
+  project = 'tailwinds',
+  text = "parquet",
   batch_size = 5
 )
 ```
