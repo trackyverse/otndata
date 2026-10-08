@@ -79,6 +79,7 @@ otn_upload <- function(file_path, project) {
         # at the same time. This allows us to back off and retry the failed file.
         httr2::req_retry(
           # Let httr2 know that 500 should trigger a re-try.
+          max_tries = 2,
           is_transient = \(resp) httr2::resp_status(resp) == 500,
           backoff = \(iter) 2^iter * 0.1 + runif(1, 0, 0.1)
         )
@@ -89,7 +90,7 @@ otn_upload <- function(file_path, project) {
     file_size
   )
 
-  if (length(responses) == 1) {
+  if (length(requests) == 1) {
     responses <- httr2::req_perform(requests[[1]])
   } else {
     responses <- httr2::req_perform_parallel(
