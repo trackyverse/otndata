@@ -16,6 +16,6 @@
 }
 \description{
 Provides access to the data that is on the main OTN members page. Login is
-not required.
+only required for "my projects".
 }
 \keyword{internal}

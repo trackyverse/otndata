@@ -96,6 +96,14 @@ otn_set_credentials("act")
 otn_login("act")
 ```
 
+## Listing your projects
+
+List the projects to which you have access:
+
+```{r}
+otn_list_projects("act", what = "mine")
+```
+
 ## Listing project files
 
 List your project's files:

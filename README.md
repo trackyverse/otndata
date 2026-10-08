@@ -238,6 +238,53 @@ otn_set_credentials("act")
 otn_login("act")
 ```
 
+## Listing your projects
+
+List the projects to which you have access:
+
+``` r
+otn_list_projects("act", what = "mine")
+#>    node collectioncode                                    shortname
+#> 1   ACT         CBBBMB           UMCES Chesapeake Backbone, Mid-Bay
+#> 2   ACT         HRSB04 UMCES Resident Hudson Striped Bass Migration
+#> 3   ACT         HRSB09  UMCES Lower Hudson Striped Bass Contingents
+#> 4   ACT         HUDRSB    UMCES-NYSDEC Hudson Striped Bass Spawning
+#> 5   ACT         MAMBON                            Mid-Atlantic MBON
+#> 6   ACT          MDBSB UMCES Black Sea Bass & Offshore Construction
+#> 7   ACT          MDWEA              UMCES BOEM Offshore Wind Energy
+#> 8   ACT       MDWEAMAM          UMCES BOEM Marine Mammal Monitoring
+#> 9   ACT          PASBT   UMCES Potomac River Striped Bass Migration
+#> 10  ACT        PAXSB08           UMCES Striped Bass Thermal Squeeze
+#> 11  ACT      TAILWINDS                              UMCES TailWinds
+#> 12  ACT        USWTRBM                          US Wind MarWin TRBM
+#>                                                                                                                                longname
+#> 1                                                                   Building a Mainstem Chesapeake Bay Telemetry Array: Mid-Bay Segment
+#> 2                                                                              Migration Patterns of Resident Hudson River Striped Bass
+#> 3                                                             Striped Bass Habitat Use and Migrations in the Lower Hudson River Estuary
+#> 4                                                                   Spawning Behavior and Ocean Migrations by Hudson River Striped Bass
+#> 5                                                       Mid-Atlantic MBON: Dynamic Biodiversity and Telemetry Data for a Changing Coast
+#> 6         Influence of Turbine Construction Noise on Black Sea Bass Displacement and Physiological Condition in the MD Wind Energy Area
+#> 7           Movement and Habitat Selection by Migratory Marine Fishes within the Maryland Wind Energy Area and Adjacent Reference Sites
+#> 8  Add-on to: Determining Habitat Use by Marine Mammals and Ambient Noise Levels Using Passive Acoustic Monitoring Offshore of Maryland
+#> 9                                                                           PAST: The Potomac and Atlantic Striped Bass Telemetry Study
+#> 10                                                  Test of The Thermal Niche-Oxygen Squeeze Hypothesis for Chesapeake Bay Striped Bass
+#> 11                                                TailWinds: Team for Assessing Impacts to Living resources from offshore WIND turbineS
+#> 12                                                                        US Wind MarWin MetOcean Buoy and Trawl-Resistant Bottom Mount
+#>                                                         url
+#> 1     https://data.theactnetwork.com/data/repository/cbbbmb
+#> 2     https://data.theactnetwork.com/data/repository/hrsb04
+#> 3     https://data.theactnetwork.com/data/repository/hrsb09
+#> 4     https://data.theactnetwork.com/data/repository/hudrsb
+#> 5     https://data.theactnetwork.com/data/repository/mambon
+#> 6      https://data.theactnetwork.com/data/repository/mdbsb
+#> 7      https://data.theactnetwork.com/data/repository/mdwea
+#> 8   https://data.theactnetwork.com/data/repository/mdweamam
+#> 9      https://data.theactnetwork.com/data/repository/pasbt
+#> 10   https://data.theactnetwork.com/data/repository/paxsb08
+#> 11 https://data.theactnetwork.com/data/repository/tailwinds
+#> 12   https://data.theactnetwork.com/data/repository/uswtrbm
+```
+
 ## Listing project files
 
 List your project’s files:
