@@ -263,10 +263,56 @@
 <span><span class="fu"><a href="reference/otn_login.html">otn_login</a></span><span class="op">(</span><span class="st">"act"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="listing-your-projects">Listing your projects<a class="anchor" aria-label="anchor" href="#listing-your-projects"></a>
+</h2>
+<p>List the projects to which you have access:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/otn_list_projects.html">otn_list_projects</a></span><span class="op">(</span><span class="st">"act"</span>, what <span class="op">=</span> <span class="st">"mine"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    node collectioncode                                    shortname</span></span>
+<span><span class="co">#&gt; 1   ACT         CBBBMB           UMCES Chesapeake Backbone, Mid-Bay</span></span>
+<span><span class="co">#&gt; 2   ACT         HRSB04 UMCES Resident Hudson Striped Bass Migration</span></span>
+<span><span class="co">#&gt; 3   ACT         HRSB09  UMCES Lower Hudson Striped Bass Contingents</span></span>
+<span><span class="co">#&gt; 4   ACT         HUDRSB    UMCES-NYSDEC Hudson Striped Bass Spawning</span></span>
+<span><span class="co">#&gt; 5   ACT         MAMBON                            Mid-Atlantic MBON</span></span>
+<span><span class="co">#&gt; 6   ACT          MDBSB UMCES Black Sea Bass &amp; Offshore Construction</span></span>
+<span><span class="co">#&gt; 7   ACT          MDWEA              UMCES BOEM Offshore Wind Energy</span></span>
+<span><span class="co">#&gt; 8   ACT       MDWEAMAM          UMCES BOEM Marine Mammal Monitoring</span></span>
+<span><span class="co">#&gt; 9   ACT          PASBT   UMCES Potomac River Striped Bass Migration</span></span>
+<span><span class="co">#&gt; 10  ACT        PAXSB08           UMCES Striped Bass Thermal Squeeze</span></span>
+<span><span class="co">#&gt; 11  ACT      TAILWINDS                              UMCES TailWinds</span></span>
+<span><span class="co">#&gt; 12  ACT        USWTRBM                          US Wind MarWin TRBM</span></span>
+<span><span class="co">#&gt;                                                                                                                                longname</span></span>
+<span><span class="co">#&gt; 1                                                                   Building a Mainstem Chesapeake Bay Telemetry Array: Mid-Bay Segment</span></span>
+<span><span class="co">#&gt; 2                                                                              Migration Patterns of Resident Hudson River Striped Bass</span></span>
+<span><span class="co">#&gt; 3                                                             Striped Bass Habitat Use and Migrations in the Lower Hudson River Estuary</span></span>
+<span><span class="co">#&gt; 4                                                                   Spawning Behavior and Ocean Migrations by Hudson River Striped Bass</span></span>
+<span><span class="co">#&gt; 5                                                       Mid-Atlantic MBON: Dynamic Biodiversity and Telemetry Data for a Changing Coast</span></span>
+<span><span class="co">#&gt; 6         Influence of Turbine Construction Noise on Black Sea Bass Displacement and Physiological Condition in the MD Wind Energy Area</span></span>
+<span><span class="co">#&gt; 7           Movement and Habitat Selection by Migratory Marine Fishes within the Maryland Wind Energy Area and Adjacent Reference Sites</span></span>
+<span><span class="co">#&gt; 8  Add-on to: Determining Habitat Use by Marine Mammals and Ambient Noise Levels Using Passive Acoustic Monitoring Offshore of Maryland</span></span>
+<span><span class="co">#&gt; 9                                                                           PAST: The Potomac and Atlantic Striped Bass Telemetry Study</span></span>
+<span><span class="co">#&gt; 10                                                  Test of The Thermal Niche-Oxygen Squeeze Hypothesis for Chesapeake Bay Striped Bass</span></span>
+<span><span class="co">#&gt; 11                                                TailWinds: Team for Assessing Impacts to Living resources from offshore WIND turbineS</span></span>
+<span><span class="co">#&gt; 12                                                                        US Wind MarWin MetOcean Buoy and Trawl-Resistant Bottom Mount</span></span>
+<span><span class="co">#&gt;                                                         url</span></span>
+<span><span class="co">#&gt; 1     https://data.theactnetwork.com/data/repository/cbbbmb</span></span>
+<span><span class="co">#&gt; 2     https://data.theactnetwork.com/data/repository/hrsb04</span></span>
+<span><span class="co">#&gt; 3     https://data.theactnetwork.com/data/repository/hrsb09</span></span>
+<span><span class="co">#&gt; 4     https://data.theactnetwork.com/data/repository/hudrsb</span></span>
+<span><span class="co">#&gt; 5     https://data.theactnetwork.com/data/repository/mambon</span></span>
+<span><span class="co">#&gt; 6      https://data.theactnetwork.com/data/repository/mdbsb</span></span>
+<span><span class="co">#&gt; 7      https://data.theactnetwork.com/data/repository/mdwea</span></span>
+<span><span class="co">#&gt; 8   https://data.theactnetwork.com/data/repository/mdweamam</span></span>
+<span><span class="co">#&gt; 9      https://data.theactnetwork.com/data/repository/pasbt</span></span>
+<span><span class="co">#&gt; 10   https://data.theactnetwork.com/data/repository/paxsb08</span></span>
+<span><span class="co">#&gt; 11 https://data.theactnetwork.com/data/repository/tailwinds</span></span>
+<span><span class="co">#&gt; 12   https://data.theactnetwork.com/data/repository/uswtrbm</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="listing-project-files">Listing project files<a class="anchor" aria-label="anchor" href="#listing-project-files"></a>
 </h2>
 <p>List your project’s files:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/otn_project_files.html">otn_project_files</a></span><span class="op">(</span>project <span class="op">=</span> <span class="st">'tailwinds'</span>, batch_size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                            name description</span></span>
 <span><span class="co">#&gt; 1        tailwinds_master_metadata_20240812.csv            </span></span>
@@ -313,7 +359,7 @@
 <span><span class="co">#&gt; 4 2026-06-12 13:25:49 2026-07-28 14:22:45  otnbot  96.2 KB File</span></span>
 <span><span class="co">#&gt; 5 2026-06-12 13:26:03 2026-06-12 13:26:03 krichie 174.2 KB File</span></span></code></pre></div>
 <p>Or, just grab the ones modified more recently using the <code>since</code> argument:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/otn_project_files.html">otn_project_files</a></span><span class="op">(</span></span>
 <span>  project <span class="op">=</span> <span class="st">'tailwinds'</span>,</span>
 <span>  since <span class="op">=</span> <span class="st">"2026-06-01"</span>,</span>
@@ -368,7 +414,7 @@
 <span><span class="co">#&gt; 4 2026-06-12 13:26:19 2026-07-28 14:22:47  otnbot 131.7 KB File</span></span>
 <span><span class="co">#&gt; 5 2026-06-12 13:26:45 2026-07-28 14:22:46  otnbot  52.2 KB File</span></span></code></pre></div>
 <p>Your can also text search for only certain files with the <code>text</code> argument:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/otn_extract_files.html">otn_extract_files</a></span><span class="op">(</span></span>
 <span>  project <span class="op">=</span> <span class="st">'tailwinds'</span>,</span>
 <span>  text <span class="op">=</span> <span class="st">"parquet"</span>,</span>
@@ -403,7 +449,7 @@
 <h2 id="download-files">Download files<a class="anchor" aria-label="anchor" href="#download-files"></a>
 </h2>
 <p>You can pipe this list into <code>otn_download</code> to save the files to your computer:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/otn_extract_files.html">otn_extract_files</a></span><span class="op">(</span></span>
 <span>  project <span class="op">=</span> <span class="st">'tailwinds'</span>,</span>
 <span>  since <span class="op">=</span> <span class="st">"2026-06-01"</span>,</span>
@@ -412,7 +458,7 @@
 <span>  <span class="fu"><a href="reference/otn_download.html">otn_download</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ Files saved to ./tailwinds_qualified_detections.parquet.</span></span></code></pre></div>
 <p>Or download directly via its URL:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/otn_download.html">otn_download</a></span><span class="op">(</span></span>
 <span>  url <span class="op">=</span> <span class="st">"https://members.devel.oceantrack.org/data/repository/nsbs/detection-extracts/nsbs_matched_detections_2017.zip"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -421,7 +467,7 @@
 <h2 id="upload-files">Upload files<a class="anchor" aria-label="anchor" href="#upload-files"></a>
 </h2>
 <p>Upload files to the staging area in preparation for the next data push:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="st">"VR2AR_XYZ_123.vrl"</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/otn_upload.html">otn_upload</a></span><span class="op">(</span><span class="st">"my_project"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -429,7 +475,7 @@
 <h2 id="summarize-your-detection-extracts">Summarize your detection extracts<a class="anchor" aria-label="anchor" href="#summarize-your-detection-extracts"></a>
 </h2>
 <p>You can create <a href="https://otndo.obrien.page" class="external-link">otndo reports</a> using the <code>otn_receiver_summary</code> and <code>otn_tag_summary</code> helper functions.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/otn_receiver_summary.html">otn_receiver_summary</a></span><span class="op">(</span><span class="st">"tailwinds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/otn_tag_summary.html">otn_tag_summary</a></span><span class="op">(</span><span class="st">"mdwea"</span><span class="op">)</span></span></code></pre></div>
 </div>

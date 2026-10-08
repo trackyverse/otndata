@@ -1,7 +1,7 @@
 # Internal function to list small OTN databases.
 
 Provides access to the data that is on the main OTN members page. Login
-is not required.
+is only required for "my projects".
 
 ## Usage
 

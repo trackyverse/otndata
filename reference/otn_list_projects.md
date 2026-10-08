@@ -5,7 +5,7 @@ Retrieve OTN project list.
 ## Usage
 
 ``` r
-otn_list_projects(network = "otn")
+otn_list_projects(network = "otn", what = c("all", "mine"))
 ```
 
 ## Arguments
@@ -17,3 +17,9 @@ otn_list_projects(network = "otn")
   "otn_devel" (the OTN development server). Note that "etn", "fact",
   "glatos", "path" and "raft" are accepted, but only to produce an error
   and redirect you.
+
+- what:
+
+  Which projects do you wish to see: `all` or `mine`? `all` can be
+  viewed without logging in, but you must log in before viewing yours
+  (well, `mine`).
