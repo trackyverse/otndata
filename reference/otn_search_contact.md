@@ -5,7 +5,7 @@ Search OTN database by project contact.
 ## Usage
 
 ``` r
-otn_search_contact(contact, network = "otn")
+otn_search_contact(contact, network = NULL)
 ```
 
 ## Arguments

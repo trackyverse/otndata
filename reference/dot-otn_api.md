@@ -5,7 +5,7 @@ Call OTN API endpoints.
 ## Usage
 
 ``` r
-.otn_api(endpoint, server = otn_global$server_url)
+.otn_api(endpoint, server)
 ```
 
 ## Arguments

@@ -5,7 +5,7 @@ Create summary reports of receiver project data from the OTN data push.
 ## Usage
 
 ``` r
-otn_tag_summary(project = NULL, matched = NULL, ...)
+otn_tag_summary(project = NULL, matched = NULL, network = NULL, ...)
 ```
 
 ## Arguments

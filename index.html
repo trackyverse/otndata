@@ -108,8 +108,8 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://otndata.obrien.page">otndata</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># OTN's server (default)</span></span>
-<span><span class="fu"><a href="reference/otn_list_species.html">otn_list_species</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="co"># What species are tagged?</span></span>
+<span><span class="fu"><a href="reference/otn_list_species.html">otn_list_species</a></span><span class="op">(</span><span class="st">"otn"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;           scientificname           commonname</span></span>
 <span><span class="co">#&gt; 1          Abramis brama                bream</span></span>
@@ -172,10 +172,10 @@
 <span><span class="co">#&gt; [1] 476</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $rcvr_count</span></span>
-<span><span class="co">#&gt; [1] 3529</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 3527</span></span></code></pre></div>
 <p>You can also query projects according to code, country of origin, species, institution, node, or point of contact.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/otn_search_node.html">otn_search_node</a></span><span class="op">(</span><span class="st">"ACT"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/otn_search_node.html">otn_search_node</a></span><span class="op">(</span><span class="st">"act"</span>, network <span class="op">=</span> <span class="st">"otn"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   node collectioncode country longitude latitude</span></span>
 <span><span class="co">#&gt; 1  ACT        CTR0204     USA -72.64802 42.20387</span></span>
@@ -214,16 +214,18 @@
 <span><span class="co">#&gt; 6 https://matos.asascience.com/</span></span>
 <span></span>
 <span><span class="co"># This accepts partial matches</span></span>
-<span><span class="fu"><a href="reference/otn_search_code.html">otn_search_code</a></span><span class="op">(</span><span class="st">"tail"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/otn_search_code.html">otn_search_code</a></span><span class="op">(</span><span class="st">"tail"</span>, network <span class="op">=</span> <span class="st">"act"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   node collectioncode country longitude latitude       shortname</span></span>
 <span><span class="co">#&gt; 1  ACT      TAILWINDS     USA  -73.8185  38.0705 UMCES TailWinds</span></span>
 <span><span class="co">#&gt;                                                                                longname</span></span>
 <span><span class="co">#&gt; 1 TailWinds: Team for Assessing Impacts to Living resources from offshore WIND turbineS</span></span>
-<span><span class="co">#&gt;         ocean                      website            datacenter_infourl</span></span>
-<span><span class="co">#&gt; 1 NW ATLANTIC https://tailwinds.umces.edu/ https://matos.asascience.com/</span></span>
+<span><span class="co">#&gt;         ocean                      website datacenter_infourl</span></span>
+<span><span class="co">#&gt; 1 NW ATLANTIC https://tailwinds.umces.edu/                 NA</span></span>
+<span><span class="co">#&gt;                                           institutionname</span></span>
+<span><span class="co">#&gt; 1 University of Maryland Center for Environmental Science</span></span>
 <span></span>
 <span><span class="co"># This does not accept partial matches</span></span>
-<span><span class="fu"><a href="reference/otn_search_contact.html">otn_search_contact</a></span><span class="op">(</span><span class="st">"Mike O'Brien"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/otn_search_contact.html">otn_search_contact</a></span><span class="op">(</span><span class="st">"Mike O'Brien"</span>, <span class="st">"act"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   node collectioncode country longitude latitude</span></span>
 <span><span class="co">#&gt; 1  ACT         CBBBMB     USA  -73.8150  38.0700</span></span>
 <span><span class="co">#&gt; 2  ACT      TAILWINDS     USA  -73.8185  38.0705</span></span>
@@ -244,16 +246,16 @@
 <span><span class="co">#&gt; 2 NW ATLANTIC                     https://tailwinds.umces.edu/</span></span>
 <span><span class="co">#&gt; 3 NW ATLANTIC https://marinebon.org/us-mbon/mid-atlantic-mbon/</span></span>
 <span><span class="co">#&gt; 4 NW ATLANTIC                                             &lt;NA&gt;</span></span>
-<span><span class="co">#&gt;              datacenter_infourl</span></span>
-<span><span class="co">#&gt; 1 https://matos.asascience.com/</span></span>
-<span><span class="co">#&gt; 2 https://matos.asascience.com/</span></span>
-<span><span class="co">#&gt; 3 https://matos.asascience.com/</span></span>
-<span><span class="co">#&gt; 4 https://matos.asascience.com/</span></span></code></pre></div>
+<span><span class="co">#&gt;   datacenter_infourl                                         institutionname</span></span>
+<span><span class="co">#&gt; 1                 NA University of Maryland Center for Environmental Science</span></span>
+<span><span class="co">#&gt; 2                 NA University of Maryland Center for Environmental Science</span></span>
+<span><span class="co">#&gt; 3                 NA               Smithsonian Environmental Research Center</span></span>
+<span><span class="co">#&gt; 4                 NA                   Naval Undersea Warfare Center Newport</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="logging-in">Logging in<a class="anchor" aria-label="anchor" href="#logging-in"></a>
 </h2>
-<p>You’ll need to log in to access other parts of the CMS using <code>otn_login</code>. This package is meant to interface with any node’s Plone instance. You can switch between them using the <code>network</code> argument.</p>
+<p>You’ll need to log in to access other parts of the CMS using <code>otn_login</code>. This package is meant to interface with any node’s Plone instance. You can switch between them using the <code>network</code> argument. If you are a member of multiple networks, you can log into all of them and toggle between using the <code>network</code> argument of other functions, such as <code>otn_extract_files("nsbs", network = "otn")</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/otn_login.html">otn_login</a></span><span class="op">(</span>network <span class="op">=</span> <span class="st">'act'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ✔ Login successful!</span></span></code></pre></div>
@@ -326,12 +328,12 @@
 <span><span class="co">#&gt; 3        https://data.theactnetwork.com/data/repository/tailwinds/data-and-metadata/receiver-metadata/tailwinds_otn_metadata_deployment.xlsx</span></span>
 <span><span class="co">#&gt; 4 https://data.theactnetwork.com/data/repository/tailwinds/data-and-metadata/receiver-metadata/tailwinds_otn_metadata_deployment_202404.xlsx</span></span>
 <span><span class="co">#&gt; 5                     https://data.theactnetwork.com/data/repository/tailwinds/data-and-metadata/detection-files/vr2ar_546307_20240425_1.vrl</span></span>
-<span><span class="co">#&gt;               created            modified creator     size type</span></span>
-<span><span class="co">#&gt; 1 2026-06-10 03:51:32 2026-06-10 03:51:32 krichie   2.5 KB File</span></span>
-<span><span class="co">#&gt; 2 2026-06-10 03:51:58 2026-06-10 03:51:58 krichie  41.9 KB File</span></span>
-<span><span class="co">#&gt; 3 2026-06-10 03:52:17 2026-06-10 03:52:17 krichie  37.0 KB File</span></span>
-<span><span class="co">#&gt; 4 2026-06-10 03:52:30 2026-06-10 03:52:30 krichie  36.7 KB File</span></span>
-<span><span class="co">#&gt; 5 2026-06-10 03:55:34 2026-06-10 03:55:34 krichie 751.0 KB File</span></span>
+<span><span class="co">#&gt;               created            modified network creator     size type</span></span>
+<span><span class="co">#&gt; 1 2026-06-10 03:51:32 2026-06-10 03:51:32     ACT krichie   2.5 KB File</span></span>
+<span><span class="co">#&gt; 2 2026-06-10 03:51:58 2026-06-10 03:51:58     ACT krichie  41.9 KB File</span></span>
+<span><span class="co">#&gt; 3 2026-06-10 03:52:17 2026-06-10 03:52:17     ACT krichie  37.0 KB File</span></span>
+<span><span class="co">#&gt; 4 2026-06-10 03:52:30 2026-06-10 03:52:30     ACT krichie  36.7 KB File</span></span>
+<span><span class="co">#&gt; 5 2026-06-10 03:55:34 2026-06-10 03:55:34     ACT krichie 751.0 KB File</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/otn_extract_files.html">otn_extract_files</a></span><span class="op">(</span>project <span class="op">=</span> <span class="st">'tailwinds'</span>, batch_size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                            name</span></span>
@@ -352,12 +354,12 @@
 <span><span class="co">#&gt; 3 https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2023-parquet</span></span>
 <span><span class="co">#&gt; 4     https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2023.zip</span></span>
 <span><span class="co">#&gt; 5 https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2024-parquet</span></span>
-<span><span class="co">#&gt;               created            modified creator     size type</span></span>
-<span><span class="co">#&gt; 1 2026-07-28 14:22:44 2026-07-28 14:22:47  otnbot 347.2 KB File</span></span>
-<span><span class="co">#&gt; 2 2026-07-28 14:22:45 2026-07-28 14:22:48  otnbot 148.4 KB File</span></span>
-<span><span class="co">#&gt; 3 2026-06-12 13:25:31 2026-06-12 13:25:31 krichie 133.0 KB File</span></span>
-<span><span class="co">#&gt; 4 2026-06-12 13:25:49 2026-07-28 14:22:45  otnbot  96.2 KB File</span></span>
-<span><span class="co">#&gt; 5 2026-06-12 13:26:03 2026-06-12 13:26:03 krichie 174.2 KB File</span></span></code></pre></div>
+<span><span class="co">#&gt;               created            modified network creator     size type</span></span>
+<span><span class="co">#&gt; 1 2026-07-28 14:22:44 2026-07-28 14:22:47     ACT  otnbot 347.2 KB File</span></span>
+<span><span class="co">#&gt; 2 2026-07-28 14:22:45 2026-07-28 14:22:48     ACT  otnbot 148.4 KB File</span></span>
+<span><span class="co">#&gt; 3 2026-06-12 13:25:31 2026-06-12 13:25:31     ACT krichie 133.0 KB File</span></span>
+<span><span class="co">#&gt; 4 2026-06-12 13:25:49 2026-07-28 14:22:45     ACT  otnbot  96.2 KB File</span></span>
+<span><span class="co">#&gt; 5 2026-06-12 13:26:03 2026-06-12 13:26:03     ACT krichie 174.2 KB File</span></span></code></pre></div>
 <p>Or, just grab the ones modified more recently using the <code>since</code> argument:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/otn_project_files.html">otn_project_files</a></span><span class="op">(</span></span>
@@ -377,12 +379,12 @@
 <span><span class="co">#&gt; 3        https://data.theactnetwork.com/data/repository/tailwinds/data-and-metadata/receiver-metadata/tailwinds_otn_metadata_deployment.xlsx</span></span>
 <span><span class="co">#&gt; 4 https://data.theactnetwork.com/data/repository/tailwinds/data-and-metadata/receiver-metadata/tailwinds_otn_metadata_deployment_202404.xlsx</span></span>
 <span><span class="co">#&gt; 5                     https://data.theactnetwork.com/data/repository/tailwinds/data-and-metadata/detection-files/vr2ar_546307_20240425_1.vrl</span></span>
-<span><span class="co">#&gt;               created            modified creator     size type</span></span>
-<span><span class="co">#&gt; 1 2026-06-10 03:51:32 2026-06-10 03:51:32 krichie   2.5 KB File</span></span>
-<span><span class="co">#&gt; 2 2026-06-10 03:51:58 2026-06-10 03:51:58 krichie  41.9 KB File</span></span>
-<span><span class="co">#&gt; 3 2026-06-10 03:52:17 2026-06-10 03:52:17 krichie  37.0 KB File</span></span>
-<span><span class="co">#&gt; 4 2026-06-10 03:52:30 2026-06-10 03:52:30 krichie  36.7 KB File</span></span>
-<span><span class="co">#&gt; 5 2026-06-10 03:55:34 2026-06-10 03:55:34 krichie 751.0 KB File</span></span>
+<span><span class="co">#&gt;               created            modified network creator     size type</span></span>
+<span><span class="co">#&gt; 1 2026-06-10 03:51:32 2026-06-10 03:51:32     ACT krichie   2.5 KB File</span></span>
+<span><span class="co">#&gt; 2 2026-06-10 03:51:58 2026-06-10 03:51:58     ACT krichie  41.9 KB File</span></span>
+<span><span class="co">#&gt; 3 2026-06-10 03:52:17 2026-06-10 03:52:17     ACT krichie  37.0 KB File</span></span>
+<span><span class="co">#&gt; 4 2026-06-10 03:52:30 2026-06-10 03:52:30     ACT krichie  36.7 KB File</span></span>
+<span><span class="co">#&gt; 5 2026-06-10 03:55:34 2026-06-10 03:55:34     ACT krichie 751.0 KB File</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/otn_extract_files.html">otn_extract_files</a></span><span class="op">(</span></span>
 <span>  project <span class="op">=</span> <span class="st">'tailwinds'</span>,</span>
@@ -407,12 +409,12 @@
 <span><span class="co">#&gt; 3   https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2023.zip</span></span>
 <span><span class="co">#&gt; 4   https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2024.zip</span></span>
 <span><span class="co">#&gt; 5 https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_unqualified_detections_2023.zip</span></span>
-<span><span class="co">#&gt;               created            modified creator     size type</span></span>
-<span><span class="co">#&gt; 1 2026-07-28 14:22:44 2026-07-28 14:22:47  otnbot 347.2 KB File</span></span>
-<span><span class="co">#&gt; 2 2026-07-28 14:22:45 2026-07-28 14:22:48  otnbot 148.4 KB File</span></span>
-<span><span class="co">#&gt; 3 2026-06-12 13:25:49 2026-07-28 14:22:45  otnbot  96.2 KB File</span></span>
-<span><span class="co">#&gt; 4 2026-06-12 13:26:19 2026-07-28 14:22:47  otnbot 131.7 KB File</span></span>
-<span><span class="co">#&gt; 5 2026-06-12 13:26:45 2026-07-28 14:22:46  otnbot  52.2 KB File</span></span></code></pre></div>
+<span><span class="co">#&gt;               created            modified network creator     size type</span></span>
+<span><span class="co">#&gt; 1 2026-07-28 14:22:44 2026-07-28 14:22:47     ACT  otnbot 347.2 KB File</span></span>
+<span><span class="co">#&gt; 2 2026-07-28 14:22:45 2026-07-28 14:22:48     ACT  otnbot 148.4 KB File</span></span>
+<span><span class="co">#&gt; 3 2026-06-12 13:25:49 2026-07-28 14:22:45     ACT  otnbot  96.2 KB File</span></span>
+<span><span class="co">#&gt; 4 2026-06-12 13:26:19 2026-07-28 14:22:47     ACT  otnbot 131.7 KB File</span></span>
+<span><span class="co">#&gt; 5 2026-06-12 13:26:45 2026-07-28 14:22:46     ACT  otnbot  52.2 KB File</span></span></code></pre></div>
 <p>Your can also text search for only certain files with the <code>text</code> argument:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/otn_extract_files.html">otn_extract_files</a></span><span class="op">(</span></span>
@@ -438,12 +440,12 @@
 <span><span class="co">#&gt; 3   https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2024-parquet</span></span>
 <span><span class="co">#&gt; 4   https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2023-parquet</span></span>
 <span><span class="co">#&gt; 5      https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_unqualified_detections-parquet</span></span>
-<span><span class="co">#&gt;               created            modified creator     size type</span></span>
-<span><span class="co">#&gt; 1 2026-06-12 13:26:59 2026-06-12 13:26:59 krichie  62.7 KB File</span></span>
-<span><span class="co">#&gt; 2 2026-06-12 13:26:33 2026-06-12 13:26:33 krichie 602.3 KB File</span></span>
-<span><span class="co">#&gt; 3 2026-06-12 13:26:03 2026-06-12 13:26:03 krichie 174.2 KB File</span></span>
-<span><span class="co">#&gt; 4 2026-06-12 13:25:31 2026-06-12 13:25:31 krichie 133.0 KB File</span></span>
-<span><span class="co">#&gt; 5 2026-07-28 14:22:45 2026-07-28 14:22:48  otnbot 148.4 KB File</span></span></code></pre></div>
+<span><span class="co">#&gt;               created            modified network creator     size type</span></span>
+<span><span class="co">#&gt; 1 2026-06-12 13:26:59 2026-06-12 13:26:59     ACT krichie  62.7 KB File</span></span>
+<span><span class="co">#&gt; 2 2026-06-12 13:26:33 2026-06-12 13:26:33     ACT krichie 602.3 KB File</span></span>
+<span><span class="co">#&gt; 3 2026-06-12 13:26:03 2026-06-12 13:26:03     ACT krichie 174.2 KB File</span></span>
+<span><span class="co">#&gt; 4 2026-06-12 13:25:31 2026-06-12 13:25:31     ACT krichie 133.0 KB File</span></span>
+<span><span class="co">#&gt; 5 2026-07-28 14:22:45 2026-07-28 14:22:48     ACT  otnbot 148.4 KB File</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="download-files">Download files<a class="anchor" aria-label="anchor" href="#download-files"></a>
@@ -456,11 +458,11 @@
 <span>  batch_size <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/otn_download.html">otn_download</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ Files saved to ./tailwinds_qualified_detections.parquet.</span></span></code></pre></div>
+<span><span class="co">#&gt; ✔ 1 file(s) saved to './tailwinds_qualified_detections.parquet'.</span></span></code></pre></div>
 <p>Or download directly via its URL:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/otn_download.html">otn_download</a></span><span class="op">(</span></span>
-<span>  url <span class="op">=</span> <span class="st">"https://members.devel.oceantrack.org/data/repository/nsbs/detection-extracts/nsbs_matched_detections_2017.zip"</span></span>
+<span>  urls <span class="op">=</span> <span class="st">"https://members.devel.oceantrack.org/data/repository/nsbs/detection-extracts/nsbs_matched_detections_2017.zip"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">

@@ -5,7 +5,7 @@ Retrieve OTN institution list.
 ## Usage
 
 ``` r
-otn_list_institutions(network = "otn")
+otn_list_institutions(network = NULL)
 ```
 
 ## Arguments

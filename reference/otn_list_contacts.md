@@ -5,7 +5,7 @@ Retrieve OTN contact list.
 ## Usage
 
 ``` r
-otn_list_contacts(network = "otn")
+otn_list_contacts(network = NULL)
 ```
 
 ## Arguments

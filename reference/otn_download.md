@@ -6,7 +6,7 @@ in the data.frame are downloaded in parallel.
 ## Usage
 
 ``` r
-otn_download(files = NULL, url = NULL, outdir = ".")
+otn_download(files = NULL, urls = NULL, outdir = ".")
 ```
 
 ## Arguments
@@ -17,7 +17,7 @@ otn_download(files = NULL, url = NULL, outdir = ".")
   `otn_extract_files`. Can have been filtered or edited, but must have
   columns of "url" and "name".
 
-- url:
+- urls:
 
   The URL of the file as returned by `otn_project_files` or
   `otn_extract_files`

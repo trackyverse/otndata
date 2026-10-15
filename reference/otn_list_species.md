@@ -5,7 +5,7 @@ Retrieve OTN species list.
 ## Usage
 
 ``` r
-otn_list_species(network = "otn")
+otn_list_species(network = NULL)
 ```
 
 ## Arguments

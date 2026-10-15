@@ -10,6 +10,7 @@ otn_receiver_summary(
   qualified = NULL,
   unqualified = NULL,
   deployment = NULL,
+  network = NULL,
   ...
 )
 ```

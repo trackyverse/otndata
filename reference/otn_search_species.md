@@ -5,7 +5,7 @@ Search OTN database by project species
 ## Usage
 
 ``` r
-otn_search_species(species, network = "otn")
+otn_search_species(species, network = NULL)
 ```
 
 ## Arguments

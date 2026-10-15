@@ -5,7 +5,7 @@ Retrieve OTN network statistics.
 ## Usage
 
 ``` r
-otn_list_stats(network = "otn")
+otn_list_stats(network = NULL)
 ```
 
 ## Arguments

@@ -5,7 +5,7 @@ Search OTN database by project country.
 ## Usage
 
 ``` r
-otn_search_country(country, network = "otn")
+otn_search_country(country, network = NULL)
 ```
 
 ## Arguments

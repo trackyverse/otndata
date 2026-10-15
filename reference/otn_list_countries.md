@@ -5,7 +5,7 @@ Retrieve OTN country list.
 ## Usage
 
 ``` r
-otn_list_countries(network = "otn")
+otn_list_countries(network = NULL)
 ```
 
 ## Arguments

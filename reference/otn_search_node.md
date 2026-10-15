@@ -5,7 +5,7 @@ Search OTN database by local node.
 ## Usage
 
 ``` r
-otn_search_node(node, network = "otn")
+otn_search_node(node, network = NULL)
 ```
 
 ## Arguments

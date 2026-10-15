@@ -5,7 +5,7 @@ Search OTN database by project code.
 ## Usage
 
 ``` r
-otn_search_code(code, network = "otn")
+otn_search_code(code, network = NULL)
 ```
 
 ## Arguments

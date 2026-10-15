@@ -5,7 +5,7 @@ Search OTN database by institution.
 ## Usage
 
 ``` r
-otn_search_institution(institution, network = "otn")
+otn_search_institution(institution, network = NULL)
 ```
 
 ## Arguments

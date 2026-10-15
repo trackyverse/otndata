@@ -8,7 +8,13 @@ not a public project.
 ## Usage
 
 ``` r
-otn_project_files(project, text = NULL, since = NULL, batch_size = 25)
+otn_project_files(
+  project,
+  text = NULL,
+  since = NULL,
+  batch_size = 25,
+  network = NULL
+)
 ```
 
 ## Arguments
@@ -30,6 +36,14 @@ otn_project_files(project, text = NULL, since = NULL, batch_size = 25)
 - batch_size:
 
   Numeric. The number of results to return. Defaults to 25.
+
+- network:
+
+  Character. Lowercase code of the desired telemetry network. One of
+  "otn", "act", "atap", "itag", "migramar", "nep", "npact", "pirat", or
+  "otn_devel" (the OTN development server). Note that "etn", "fact",
+  "glatos", "path" and "raft" are accepted, but only to produce an error
+  and redirect you.
 
 ## See also
 
