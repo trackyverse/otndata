@@ -1,8 +1,8 @@
 ---
-title: "Access for ACT Network members"
+title: "Access for OTN nodes with a Plone CMS"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Access for ACT Network members}
+  %\VignetteIndexEntry{Access for OTN nodes with a Plone CMS}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-You've just received notifications that your ACT Network tag matches are in. Hooray!! Let's walk through how to interact with all of your data.
+You've just received notifications that your tag matches are in, hooray!! Let's walk through how to interact with all of your data.
 
 ```{r setup}
 library(otndata)
@@ -22,7 +22,7 @@ library(dplyr)
 library(arrow)
 ```
 
-First, we need to log in. If you have never entered your username and password before, you'll need to do so. Run the following:
+First, we need to log in. If you have never entered your username and password before, you'll need to do so. I'm an ACT member, so I'll be logging into my network. If you're a member of a different network, just switch in your network's code. Run the following:
 
 ```{r}
 otn_login("act")
@@ -34,7 +34,14 @@ This will just set your credentials for the current R session. If you wish to us
 otn_set_credentials("act")
 ```
 
-What you might first want to do is check out all of the data extract files on offer.
+It might be that you just want a high-level summary of what's new. `otndata` interfaces seamlessly with the [`otndo` package](https://otndo.obrien.page) using [`otn_receiver_summary`](https://otndata.obrien.page/reference/otn_receiver_summary.html) or [`otn_tag_summary`](https://otndata.obrien.page/reference/otn_tag_summary.html) for receiver and tag projects, respectively.
+
+```{r, eval=FALSE}
+otn_receiver_summary("tailwinds")
+otn_tag_summary("mdbsb")
+```
+
+After this, you might want to dig a little further into all of the data extract files on offer.
 
 ```{r}
 otn_extract_files(project = "tailwinds")
@@ -42,9 +49,8 @@ otn_extract_files(project = "tailwinds")
 
 This can be a lot! We can just grab the files that have been modified after a certain date -- usually the date just before the most-recent data push.
 
-
 ```{r}
-otn_extract_files(project = "tailwinds", since = "2026-06-12")
+otn_extract_files(project = "tailwinds", since = "2026-07-28")
 ```
 
 The most important thing, however, is downloading those files! Let's grab the parquet files via `otn_extract_files`, download them with `otn_download`, and create a mini-database for ourselves.
@@ -52,9 +58,9 @@ The most important thing, however, is downloading those files! Let's grab the pa
 ```{r}
 otn_extract_files(
   project = "tailwinds",
-  since = "2026-06-12"
+  text = "mapped parquet",
+  since = "2026-07-28"
 ) |>
-  dplyr::filter(grepl("_qualified.*parquet", name)) |>
   otn_download(outdir = "./my_awesome_detections")
 ```
 
@@ -86,9 +92,10 @@ my_db |>
 ```
 
 
+
+
 ```{r, echo=FALSE, message=FALSE}
 # Clean up the folder made above
 rm(my_db)
-gc(verbose = FALSE)
 unlink("my_awesome_detections", recursive = T)
 ```

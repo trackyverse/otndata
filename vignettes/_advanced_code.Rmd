@@ -1,0 +1,123 @@
+---
+title: "Advanced tips and tricks"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Advanced tips and tricks}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This document serves as a clearinghouse for nifty code chunks that might look complicated, but get a lot done.
+
+```{r setup}
+library(otndata)
+otn_login("act")
+```
+
+## Database operations on the fly
+
+Plone does not allow you to stream data over HTTP, but you _can_ download files to a temporary directory and make some quick queries. Is this efficient? Maybe, maybe not. Here is an example: 
+
+```{r}
+td <- file.path(tempdir(), "detections")
+dir.create(td)
+
+otn_list_projects("mine", network = "act") |>
+  _$collectioncode |>
+  lapply(otn_extract_files, text = "matched parquet", network = "act") |>
+  do.call(rbind, args = _) |>
+  otn_download(outdir = td)
+
+db <- arrow::open_dataset(td)
+db |>
+  dplyr::count(contactPI) |>
+  dplyr::arrange(-n) |>
+  dplyr::collect()
+
+db |>
+  dplyr::distinct(citation) |>
+  dplyr::collect()
+
+unlink(td, recursive = TRUE)
+```
+
+## `otndo` reports
+
+Create reports for _all_ of my projects in one go. Right now, this needs to be done separately for receiver and tag projects. First, receiver projects:
+
+```{r, eval=FALSE}
+# List my projects
+otn_list_projects("mine") |>
+
+  # Grab the collection code
+  _$collectioncode |>
+
+  # Create receiver summaries, wrapped in tryCatch as some projects are tag-only
+  lapply(
+    function(x) {
+      tryCatch(
+        otn_receiver_summary(x),
+        error = function(e) NULL
+      )
+    }
+  )
+```
+
+Same thing for tag projects:
+
+```{r, eval=FALSE}
+# List my projects
+otn_list_projects("mine") |>
+
+  # Grab the collection code
+  _$collectioncode |>
+
+  # Create tag summaries, wrapped in tryCatch as some projects are receiver-only
+  lapply(
+    function(x) {
+      tryCatch(
+        otn_tag_summary(x),
+        error = function(e) NULL
+      )
+    }
+  )
+```
+
+## Multi-network users
+
+List all of my extract files in parquet format projects across multiple networks.
+
+
+```{r, eval=FALSE}
+c("act", "otn_devel") |>
+
+  # List all of my projects
+  lapply(
+    function(.) otn_list_projects(what = "mine", network = .)
+  ) |>
+  do.call(rbind, args = _) |>
+
+  # Pull out project codes
+  _$collectioncode |>
+
+  # Grab the parquet extract files. Wrapped in "tryCatch" in case some projects
+  #    lack files
+  lapply(
+    function(x) {
+      tryCatch(
+        otn_extract_files(x, text = "parquet"),
+        error = function(e) {
+          NULL
+        }
+      )
+    }
+  ) |>
+  do.call(rbind, args = _)
+```

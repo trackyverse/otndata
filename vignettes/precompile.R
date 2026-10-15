@@ -25,9 +25,7 @@ library(knitr)
 orig_wd <- getwd()
 setwd(file.path(orig_wd, "vignettes"))
 
-knit(
-  "_act_network.Rmd",
-  "act_network.Rmd"
-)
+knit("_quick_start.Rmd", "quick_start.Rmd")
+knit("_advanced_code.Rmd", "advanced_code.Rmd")
 
 setwd(orig_wd)
