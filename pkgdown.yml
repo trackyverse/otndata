@@ -2,8 +2,9 @@ pandoc: 3.8.3
 pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
-  act_network: act_network.html
-last_built: 2026-10-15T18:54Z
+  advanced_code: advanced_code.html
+  quick_start: quick_start.html
+last_built: 2026-10-15T21:01Z
 urls:
   reference: https://otndata.obrien.page/reference
   article: https://otndata.obrien.page/articles

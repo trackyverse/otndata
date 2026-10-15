@@ -1,0 +1,149 @@
+# Advanced tips and tricks
+
+This document serves as a clearinghouse for nifty code chunks that might
+look complicated, but get a lot done.
+
+``` r
+
+library(otndata)
+otn_login("act")
+#> ✔ Login successful!
+```
+
+## Database operations on the fly
+
+Plone does not allow you to stream data over HTTP, but you *can*
+download files to a temporary directory and make some quick queries. Is
+this efficient? Maybe, maybe not. Here is an example:
+
+``` r
+
+td <- file.path(tempdir(), "detections")
+dir.create(td)
+
+otn_list_projects("mine", network = "act") |>
+  _$collectioncode |>
+  lapply(otn_extract_files, text = "matched parquet", network = "act") |>
+  do.call(rbind, args = _) |>
+  otn_download(outdir = td)
+#> ✔ 5 file(s) saved to '
+
+db <- arrow::open_dataset(td)
+db |>
+  dplyr::count(contactPI) |>
+  dplyr::arrange(-n) |>
+  dplyr::collect()
+#> # A tibble: 54 × 2
+#>    contactPI                                            n
+#>    <chr>                                            <int>
+#>  1 David Secor (secor@umces.edu)                  1596313
+#>  2 William Hoffman (bill.hoffman@mass.gov)          40343
+#>  3 Matthew Ogburn (ogburnm@si.edu)                  38576
+#>  4 Patrick McGrath (patm@vims.edu)                  15156
+#>  5 Ian Park (ian.park@delaware.gov)                 11324
+#>  6 Wilmelie Cruz-Marrero (wilmelie.cruz@noaa.gov)   10672
+#>  7 Michael Frisk (michael.frisk@stonybrook.edu)      4241
+#>  8 Tom Savoy (tom.savoy@ct.gov)                      2642
+#>  9 Joseph Iafrate (joseph.iafrate@navy.mil)          2636
+#> 10 Chuck Stence (chuck.stence@maryland.gov)          2242
+#> # ℹ 44 more rows
+
+db |>
+  dplyr::distinct(citation) |>
+  dplyr::collect()
+#> # A tibble: 32 × 1
+#>    citation                                                        
+#>    <chr>                                                           
+#>  1 <NA>                                                            
+#>  2 O'Brien, M. 2016. Movement and Habitat Selection by Migratory M…
+#>  3 Weng, K., Crear, D., 2017. Improving acoustic receiver coverage…
+#>  4 Ogburn, M. 2013. SERC Acoustic Telemetry Arrays                 
+#>  5 O'Brien, M. 2014. PAST: The Potomac and Atlantic Striped Bass T…
+#>  6 Stence, C. 2019. Spawning movement behaviors, habitat dependenc…
+#>  7 Frisk, M. Nearshore Gates array of Long Island South Shore, Roc…
+#>  8 Kneebone, J., Skomal, G. 2019.                                  
+#>  9 Bessudo, S., Ladino, F. 2021. Permanent study of the movements …
+#> 10 Park, I. 2009. Delaware Division of Fish and Wildlife, Delaware…
+#> # ℹ 22 more rows
+
+unlink(td, recursive = TRUE)
+```
+
+## `otndo` reports
+
+Create reports for *all* of my projects in one go. Right now, this needs
+to be done separately for receiver and tag projects. First, receiver
+projects:
+
+``` r
+
+# List my projects
+otn_list_projects("mine") |>
+
+  # Grab the collection code
+  _$collectioncode |>
+
+  # Create receiver summaries, wrapped in tryCatch as some projects are tag-only
+  lapply(
+    function(x) {
+      tryCatch(
+        otn_receiver_summary(x),
+        error = function(e) NULL
+      )
+    }
+  )
+```
+
+Same thing for tag projects:
+
+``` r
+
+# List my projects
+otn_list_projects("mine") |>
+
+  # Grab the collection code
+  _$collectioncode |>
+
+  # Create tag summaries, wrapped in tryCatch as some projects are receiver-only
+  lapply(
+    function(x) {
+      tryCatch(
+        otn_tag_summary(x),
+        error = function(e) NULL
+      )
+    }
+  )
+```
+
+## Multi-network users
+
+List all of my extract files in parquet format projects across multiple
+networks.
+
+``` r
+
+c("act", "otn_devel") |>
+
+  # List all of my projects
+  lapply(
+    function(.) otn_list_projects(what = "mine", network = .)
+  ) |>
+  do.call(rbind, args = _) |>
+
+  # Pull out project codes
+  _$collectioncode |>
+
+  # Grab the parquet extract files. Wrapped in "tryCatch" in case some projects
+  #    lack files
+  lapply(
+    function(x) {
+      tryCatch(
+        otn_extract_files(x, text = "parquet"),
+        error = function(e) {
+          NULL
+        }
+      )
+    }
+  ) |>
+  do.call(rbind, args = _)
+```

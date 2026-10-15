@@ -572,5 +572,7 @@ add-on installed, so be aware that they may not work.
 
 ### All vignettes
 
-- [Access for ACT Network
-  members](https://otndata.obrien.page/articles/act_network.md):
+- [Advanced tips and
+  tricks](https://otndata.obrien.page/articles/advanced_code.md):
+- [Access for OTN nodes with a Plone
+  CMS](https://otndata.obrien.page/articles/quick_start.md):
