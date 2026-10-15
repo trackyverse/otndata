@@ -4,7 +4,7 @@
 \alias{otn_search_institution}
 \title{Search OTN database by institution.}
 \usage{
-otn_search_institution(institution, network = "otn")
+otn_search_institution(institution, network = NULL)
 }
 \arguments{
 \item{institution}{Character. Institution for which to search. DOES NOT

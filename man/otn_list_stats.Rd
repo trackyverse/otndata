@@ -4,7 +4,7 @@
 \alias{otn_list_stats}
 \title{Retrieve OTN network statistics.}
 \usage{
-otn_list_stats(network = "otn")
+otn_list_stats(network = NULL)
 }
 \arguments{
 \item{network}{Character. Lowercase code of the desired telemetry network. One of

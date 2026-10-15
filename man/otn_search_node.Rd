@@ -4,7 +4,7 @@
 \alias{otn_search_node}
 \title{Search OTN database by local node.}
 \usage{
-otn_search_node(node, network = "otn")
+otn_search_node(node, network = NULL)
 }
 \arguments{
 \item{node}{Character. OTN node for which to search. DOES NOT support partial matching.}

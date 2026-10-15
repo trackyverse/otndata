@@ -4,7 +4,14 @@
 \alias{.otn_files}
 \title{Return files associated with an OTN project.}
 \usage{
-.otn_files(project, text = NULL, since = NULL, batch_size = NULL, type)
+.otn_files(
+  project,
+  text = NULL,
+  since = NULL,
+  batch_size = NULL,
+  network = NULL,
+  type
+)
 }
 \arguments{
 \item{project}{Character. The project code.}
@@ -16,6 +23,11 @@ for more information.}
 (YYYY-MM-DD format).}
 
 \item{batch_size}{Numeric. The number of results to return. Defaults to 25.}
+
+\item{network}{Character. Lowercase code of the desired telemetry network. One of
+"otn", "act", "atap", "itag", "migramar", "nep", "npact", "pirat", or
+"otn_devel" (the OTN development server). Note that "etn", "fact", "glatos",
+"path" and "raft" are accepted, but only to produce an error and redirect you.}
 
 \item{type}{Character. Portion of the URL representing the data type you wish
 to return.}

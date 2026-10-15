@@ -4,7 +4,7 @@
 \alias{otn_list_countries}
 \title{Retrieve OTN country list.}
 \usage{
-otn_list_countries(network = "otn")
+otn_list_countries(network = NULL)
 }
 \arguments{
 \item{network}{Character. Lowercase code of the desired telemetry network. One of

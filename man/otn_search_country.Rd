@@ -4,7 +4,7 @@
 \alias{otn_search_country}
 \title{Search OTN database by project country.}
 \usage{
-otn_search_country(country, network = "otn")
+otn_search_country(country, network = NULL)
 }
 \arguments{
 \item{country}{Character. Project country for which to search. DOES NOT support partial matching.}

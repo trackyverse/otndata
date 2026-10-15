@@ -31,13 +31,13 @@ otn_login <- function(
     otn_set_credentials(network, temporary = TRUE)
 
     creds <- c(
-      login = otn_global[[paste("OTN_USER", network, sep = ".")]],
-      pass = otn_global[[paste("OTN_PASS", network, sep = ".")]]
+      login = otn_global[[network]]$username,
+      pass = otn_global[[network]]$password
     )
   }
 
   login_request <- "@login" |>
-    .otn_api() |>
+    .otn_api(server = otn_global[[network]]$server_url) |>
     httr2::req_body_json(
       list(
         login = creds["login"],
@@ -55,7 +55,7 @@ otn_login <- function(
   )
 
   cli::cli_alert_success("Login successful!")
-  otn_global$SESSION_TOKEN <- login_response$token
+  otn_global[[network]]$token <- login_response$token
 }
 
 #' Installs your OTN username and password in your \code{.Renviron} file for repeated use.
@@ -82,11 +82,10 @@ otn_set_credentials <- function(network, temporary = FALSE, overwrite = FALSE) {
 
   if (isTRUE(temporary)) {
     # Write to otn_global environment
-    otn_global[[paste("OTN_USER", network, sep = ".")]] <- username
-    otn_global[[paste("OTN_PASS", network, sep = ".")]] <- password
+    otn_global[[network]]$username <- username
+    otn_global[[network]]$password <- password
   } else {
-    home <- Sys.getenv("HOME")
-    renv_path <- file.path(home, ".Renviron")
+    renv_path <- file.path(Sys.getenv("HOME"), ".Renviron")
 
     if (!file.exists(renv_path)) {
       file.create(renv_path)

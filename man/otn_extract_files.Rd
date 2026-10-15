@@ -4,7 +4,13 @@
 \alias{otn_extract_files}
 \title{List OTN extract files.}
 \usage{
-otn_extract_files(project, text = NULL, since = NULL, batch_size = 25)
+otn_extract_files(
+  project,
+  text = NULL,
+  since = NULL,
+  batch_size = 25,
+  network = NULL
+)
 }
 \arguments{
 \item{project}{Character. The project code.}
@@ -16,6 +22,11 @@ for more information.}
 (YYYY-MM-DD format).}
 
 \item{batch_size}{Numeric. The number of results to return. Defaults to 25.}
+
+\item{network}{Character. Lowercase code of the desired telemetry network. One of
+"otn", "act", "atap", "itag", "migramar", "nep", "npact", "pirat", or
+"otn_devel" (the OTN development server). Note that "etn", "fact", "glatos",
+"path" and "raft" are accepted, but only to produce an error and redirect you.}
 }
 \description{
 This function recursively lists files in the \emph{Detection Extracts} section of

@@ -4,10 +4,15 @@
 \alias{build_namespace}
 \title{Build project namespace}
 \usage{
-build_namespace(project)
+build_namespace(project, network = NULL)
 }
 \arguments{
 \item{project}{Character. The project code.}
+
+\item{network}{Character. Lowercase code of the desired telemetry network. One of
+"otn", "act", "atap", "itag", "migramar", "nep", "npact", "pirat", or
+"otn_devel" (the OTN development server). Note that "etn", "fact", "glatos",
+"path" and "raft" are accepted, but only to produce an error and redirect you.}
 }
 \description{
 Most project files are saved under \verb{/data/repository/\{project\}}.

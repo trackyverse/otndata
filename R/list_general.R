@@ -8,6 +8,8 @@
 #'
 #' @keywords internal
 .otn_list <- function(network, type) {
+  network <- fix_null_network(network)
+
   endpoint <- switch(
     type,
     all_projects = "projects.json",
@@ -20,11 +22,11 @@
   )
 
   if (type == "my_projects") {
-    is_logged_in()
+    is_logged_in(network)
 
     query <- endpoint |>
       .otn_api(server = .otn_server_url(network, set = FALSE)) |>
-      httr2::req_auth_bearer_token(otn_global$SESSION_TOKEN)
+      httr2::req_auth_bearer_token(otn_global[[network]]$token)
   } else {
     query <- endpoint |>
       .otn_api(server = .otn_server_url(network, set = FALSE))
@@ -39,7 +41,7 @@
 #'
 #' @inheritParams .otn_list
 #' @export
-otn_list_contacts <- function(network = "otn") {
+otn_list_contacts <- function(network = NULL) {
   .otn_list(network, "contacts")
 }
 
@@ -47,7 +49,7 @@ otn_list_contacts <- function(network = "otn") {
 #'
 #' @inheritParams .otn_list
 #' @export
-otn_list_countries <- function(network = "otn") {
+otn_list_countries <- function(network = NULL) {
   .otn_list(network, "countries")
 }
 
@@ -55,7 +57,7 @@ otn_list_countries <- function(network = "otn") {
 #'
 #' @inheritParams .otn_list
 #' @export
-otn_list_species <- function(network = "otn") {
+otn_list_species <- function(network = NULL) {
   .otn_list(network, "species")
 }
 
@@ -63,7 +65,7 @@ otn_list_species <- function(network = "otn") {
 #'
 #' @inheritParams .otn_list
 #' @export
-otn_list_institutions <- function(network = "otn") {
+otn_list_institutions <- function(network = NULL) {
   .otn_list(network, "institutions")
 }
 
@@ -73,10 +75,15 @@ otn_list_institutions <- function(network = "otn") {
 #'   viewed without logging in, but you must log in before viewing yours (well, `mine`).
 #' @inheritParams .otn_list
 #' @export
-otn_list_projects <- function(network = "otn", what = c("all", "mine")) {
+otn_list_projects <- function(
+  what = c("all", "mine"),
+  network = NULL
+) {
   what <- rlang::arg_match(what)
 
   if (what == "mine") {
+    network <- fix_null_network(network)
+
     resp <- .otn_list(network, "my_projects") |>
       _[[1]][["projects"]][[1]]
 
@@ -99,6 +106,6 @@ otn_list_projects <- function(network = "otn", what = c("all", "mine")) {
 #'
 #' @inheritParams .otn_list
 #' @export
-otn_list_stats <- function(network = "otn") {
+otn_list_stats <- function(network = NULL) {
   .otn_list(network, "stats")
 }

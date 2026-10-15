@@ -37,6 +37,7 @@ otn_receiver_summary <- function(
   qualified = NULL,
   unqualified = NULL,
   deployment = NULL,
+  network = NULL,
   ...
 ) {
   if (
@@ -57,8 +58,11 @@ otn_receiver_summary <- function(
 
   # Project ----
   if (any(is.null(qualified), is.null(unqualified))) {
+    network <- fix_null_network(network)
+    is_logged_in(network)
+
     cli::cli_alert_info("Finding data extract files...")
-    extract_files <- otn_extract_files(project = project)
+    extract_files <- otn_extract_files(project = project, network = network)
     if (any(grepl(".*parquet$", extract_files$url))) {
       cli::cli_alert_success("   Files found.")
     } else {
@@ -91,14 +95,14 @@ otn_receiver_summary <- function(
   # Deployment log ----
   ##  Download deployment metadata if not provided
   if (is.null(deployment)) {
-    project_files <- otn_project_files(project = project)
+    project_files <- otn_project_files(project = project, network = network)
 
     deployment <- otn_download(
       files = project_files[
         grepl(
           # find files that contain "deployment" but ARE NOT .txt files (i.e.
           #   the project metadata)
-          "^(?=.*(?:deployment))(?!.*\\.txt$).+$",
+          "^(?=.*(?:deployment|instrument|receiver))(?!.*\\.txt$).+$",
           project_files$name,
           ignore.case = TRUE,
           perl = TRUE

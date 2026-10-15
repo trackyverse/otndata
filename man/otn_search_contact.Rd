@@ -4,7 +4,7 @@
 \alias{otn_search_contact}
 \title{Search OTN database by project contact.}
 \usage{
-otn_search_contact(contact, network = "otn")
+otn_search_contact(contact, network = NULL)
 }
 \arguments{
 \item{contact}{Character. Project contact for which to search. DOES NOT support partial matching.}

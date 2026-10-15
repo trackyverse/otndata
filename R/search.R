@@ -7,6 +7,14 @@
 .otn_search <- function(network, type, search_term) {
   `:=` <- NULL
 
+  network <- fix_null_network(network)
+  server <- otn_global[[network]]$server_url
+
+  if (is.null(server) & !is.null(network)) {
+    server <- .otn_server_url(network, set = FALSE)
+  }
+  # is_logged_in(network)
+
   endpoint <- paste0("projects_by_", type, ".json")
   key <- switch(
     type,
@@ -18,7 +26,7 @@
     institutions = "institution"
   )
   base_req <- endpoint |>
-    .otn_api(server = .otn_server_url(network, set = FALSE))
+    .otn_api(server)
 
   rlang::inject(httr2::req_url_query(
     base_req,
@@ -33,7 +41,7 @@
 #' @param code Character. Project code for which to search. Supports partial matching.
 #' @inheritParams .otn_search
 #' @export
-otn_search_code <- function(code, network = "otn") {
+otn_search_code <- function(code, network = NULL) {
   .otn_search(network, type = "code", search_term = code)
 }
 
@@ -42,7 +50,7 @@ otn_search_code <- function(code, network = "otn") {
 #' @param contact Character. Project contact for which to search. DOES NOT support partial matching.
 #' @inheritParams .otn_search
 #' @export
-otn_search_contact <- function(contact, network = "otn") {
+otn_search_contact <- function(contact, network = NULL) {
   .otn_search(network, type = "contact", search_term = contact)
 }
 
@@ -51,7 +59,7 @@ otn_search_contact <- function(contact, network = "otn") {
 #' @param country Character. Project country for which to search. DOES NOT support partial matching.
 #' @inheritParams .otn_search
 #' @export
-otn_search_country <- function(country, network = "otn") {
+otn_search_country <- function(country, network = NULL) {
   .otn_search(network, type = "country", search_term = country)
 }
 
@@ -62,7 +70,7 @@ otn_search_country <- function(country, network = "otn") {
 #'   form "Genus species" (note capitalization).
 #' @inheritParams .otn_search
 #' @export
-otn_search_species <- function(species, network = "otn") {
+otn_search_species <- function(species, network = NULL) {
   .otn_search(network, type = "species", search_term = species)
 }
 
@@ -71,7 +79,7 @@ otn_search_species <- function(species, network = "otn") {
 #' @param node Character. OTN node for which to search. DOES NOT support partial matching.
 #' @inheritParams .otn_search
 #' @export
-otn_search_node <- function(node, network = "otn") {
+otn_search_node <- function(node, network = NULL) {
   .otn_search(network, type = "node", search_term = node)
 }
 
@@ -81,6 +89,6 @@ otn_search_node <- function(node, network = "otn") {
 #'   support partial matching.
 #' @inheritParams .otn_search
 #' @export
-otn_search_institution <- function(institution, network = "otn") {
+otn_search_institution <- function(institution, network = NULL) {
   .otn_search(network, type = "institutions", search_term = institution)
 }

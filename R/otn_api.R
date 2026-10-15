@@ -5,7 +5,7 @@
 #'
 #' @keywords internal
 #' @seealso [Plone REST API endpoints](https://6.docs.plone.org/plone.restapi/docs/source/endpoints)
-.otn_api <- function(endpoint, server = otn_global$server_url) {
+.otn_api <- function(endpoint, server) {
   server |>
     httr2::request() |>
     httr2::req_url_path_append("++api++") |>

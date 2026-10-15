@@ -4,7 +4,7 @@
 \alias{otn_list_contacts}
 \title{Retrieve OTN contact list.}
 \usage{
-otn_list_contacts(network = "otn")
+otn_list_contacts(network = NULL)
 }
 \arguments{
 \item{network}{Character. Lowercase code of the desired telemetry network. One of

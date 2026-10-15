@@ -4,7 +4,7 @@
 \alias{otn_tag_summary}
 \title{Create summary reports of receiver project data from the OTN data push.}
 \usage{
-otn_tag_summary(project = NULL, matched = NULL, ...)
+otn_tag_summary(project = NULL, matched = NULL, network = NULL, ...)
 }
 \arguments{
 \item{project}{Project name that you wish to have summarized}

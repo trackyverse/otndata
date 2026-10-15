@@ -4,7 +4,7 @@
 \alias{.otn_api}
 \title{Call OTN API endpoints.}
 \usage{
-.otn_api(endpoint, server = otn_global$server_url)
+.otn_api(endpoint, server)
 }
 \arguments{
 \item{endpoint}{Character. API endpoint to call.}

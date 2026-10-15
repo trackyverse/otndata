@@ -4,7 +4,7 @@
 \alias{otn_list_species}
 \title{Retrieve OTN species list.}
 \usage{
-otn_list_species(network = "otn")
+otn_list_species(network = NULL)
 }
 \arguments{
 \item{network}{Character. Lowercase code of the desired telemetry network. One of

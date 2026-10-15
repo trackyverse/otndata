@@ -1,7 +1,8 @@
 #' Upload a file to the Plone CMS
 #'
 #' @param file_path Character. Location of the file to be uploaded.
-#' @inheritParams .otn_files project
+#' @inheritParams .otn_files
+#' @inheritParams .otn_server_url
 #' @returns Silently returns a vector of file locations.
 #' @importFrom stats runif
 #'
@@ -9,8 +10,9 @@
 #'  * Plone REST API documentation:
 #'    * [Content manipulation](https://6.docs.plone.org/plone.restapi/docs/source/usage/content.html)
 #'    * [Deserialization](https://6.docs.plone.org/plone.restapi/docs/source/usage/serialization.html#upload-deserialization)
-otn_upload <- function(file_path, project) {
-  is_logged_in()
+otn_upload <- function(file_path, project, network = NULL) {
+  network <- fix_null_network(network)
+  is_logged_in(network)
 
   # Fail quickly if file is too large
   file_size <- file.info(file_path)$size
@@ -41,7 +43,7 @@ otn_upload <- function(file_path, project) {
 
   project_endpoint <- paste(
     "/data/repository",
-    build_namespace(project),
+    build_namespace(project, network = network),
     "to-be-filed",
     sep = "/"
   )
@@ -72,7 +74,7 @@ otn_upload <- function(file_path, project) {
       project_endpoint |>
         .otn_api() |>
         httr2::req_headers(Accept = "application/json") |>
-        httr2::req_auth_bearer_token(otn_global$SESSION_TOKEN) |>
+        httr2::req_auth_bearer_token(otn_global[[network]]$token) |>
         httr2::req_body_json(payload) |>
         httr2::req_throttle(capacity = 2, fill_time_s = 1) |>
         # Plone can return 500 (Plone "ConflictError") if two files are received

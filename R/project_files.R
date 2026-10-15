@@ -8,6 +8,7 @@
 #' @param batch_size Numeric. The number of results to return. Defaults to 25.
 #' @param type Character. Portion of the URL representing the data type you wish
 #'   to return.
+#' @inheritParams .otn_server_url network
 #'
 #' @details
 #' Filtering by \code{text} uses Plone's full-text search syntax rather than regular
@@ -36,9 +37,15 @@
   text = NULL,
   since = NULL,
   batch_size = NULL,
+  network = NULL,
   type
 ) {
-  is_logged_in()
+  network <- fix_null_network(network)
+  server <- otn_global[[network]]$server_url
+
+  if (is.null(server) & !is.null(network)) {
+    server <- .otn_server_url(network, set = FALSE)
+  }
 
   build_query <- function(text = NULL, since = NULL) {
     query <- list(
@@ -87,7 +94,7 @@
 
   project_endpoint <- paste(
     "/data/repository",
-    build_namespace(project),
+    build_namespace(project, network = network),
     type,
     ifelse(
       has_filters,
@@ -100,7 +107,7 @@
   plone_query <- function(has_filters, since, text, batch_size) {
     if (!has_filters) {
       project_endpoint |>
-        .otn_api() |>
+        .otn_api(server) |>
         httr2::req_url_query(
           portal_type = "File",
           b_size = batch_size,
@@ -116,7 +123,7 @@
         )
     } else {
       project_endpoint |>
-        .otn_api() |>
+        .otn_api(server) |>
         httr2::req_method("POST") |>
         httr2::req_body_json(
           list(
@@ -138,9 +145,25 @@
     }
   }
 
-  the_files <- plone_query(has_filters, since, text, batch_size) |>
-    httr2::req_auth_bearer_token(otn_global$SESSION_TOKEN) |>
-    httr2::req_perform() |>
+  request <- plone_query(has_filters, since, text, batch_size)
+
+  token <- otn_global[[network]]$token
+  if (!is.null(token)) {
+    request <- request |>
+      httr2::req_auth_bearer_token(token)
+  }
+
+  response <- request |>
+    httr2::req_error(is_error = \(resp) FALSE) |>
+    httr2::req_perform()
+
+  if (httr2::resp_status(response) %in% c(401, 403) && is.null(token)) {
+    cli::cli_abort(
+      "This project requires authentication. Please log into the {network} data portal."
+    )
+  }
+
+  the_files <- response |>
     httr2::resp_body_json() |>
     _$items |>
     lapply(
@@ -149,6 +172,12 @@
       }
     ) |>
     do.call(rbind, args = _)
+
+  if (!is.null(nrow(the_files))) {
+    the_files$network <- toupper(network)
+  }
+
+  ##!!!!!!check in here - comething amiss between CBBBMB in ACT and NSBS in OTN
 
   # Clean up names
   # This was an opinionated selection by M. O'Brien. Query
@@ -160,6 +189,7 @@
       "getURL",
       "created",
       "modified",
+      "network",
       "Creator",
       "getObjSize",
       "type_title"
@@ -172,6 +202,7 @@
     "url",
     "created",
     "modified",
+    "network",
     "creator",
     "size",
     "type"
@@ -216,14 +247,16 @@ otn_project_files <- function(
   project,
   text = NULL,
   since = NULL,
-  batch_size = 25
+  batch_size = 25,
+  network = NULL
 ) {
   .otn_files(
     project = project,
     text = text,
     since = since,
     batch_size = batch_size,
-    type = "data-and-metadata"
+    type = "data-and-metadata",
+    network = network
   )
 }
 
@@ -239,13 +272,15 @@ otn_extract_files <- function(
   project,
   text = NULL,
   since = NULL,
-  batch_size = 25
+  batch_size = 25,
+  network = NULL
 ) {
   .otn_files(
     project = project,
     text = text,
     since = since,
     batch_size = batch_size,
-    type = "detection-extracts"
+    type = "detection-extracts",
+    network = network
   )
 }

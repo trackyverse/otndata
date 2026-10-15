@@ -4,7 +4,7 @@
 \alias{otn_search_species}
 \title{Search OTN database by project species}
 \usage{
-otn_search_species(species, network = "otn")
+otn_search_species(species, network = NULL)
 }
 \arguments{
 \item{species}{Character. Project species for which to search. DOES NOT

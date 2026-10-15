@@ -57,8 +57,8 @@ If this widget is enabled, you can access the information shown without needing 
 ```{r example}
 library(otndata)
 
-# OTN's server (default)
-otn_list_species() |>
+# What species are tagged?
+otn_list_species("otn") |>
   head()
 
 # Try a different server
@@ -71,19 +71,20 @@ otn_list_stats(network = "otn_devel")
 You can also query projects according to code, country of origin, species, institution, node, or point of contact.
 
 ```{r}
-otn_search_node("ACT") |>
+otn_search_node("act", network = "otn") |>
   head()
 
 # This accepts partial matches
-otn_search_code("tail")
+otn_search_code("tail", network = "act")
 
 # This does not accept partial matches
-otn_search_contact("Mike O'Brien")
+otn_search_contact("Mike O'Brien", "act")
 ```
 
 ## Logging in
 
-You'll need to log in to access other parts of the CMS using `otn_login`. This package is meant to interface with any node's Plone instance. You can switch between them using the `network` argument.
+You'll need to log in to access other parts of the CMS using `otn_login`. This package is meant to interface with any node's Plone instance. You can switch between them using the `network` argument. If you are a member of multiple networks, you can log into all of them and toggle between using the `network` argument of other functions, such as `otn_extract_files("nsbs", network = "otn")`.
+
 
 ```{r login}
 otn_login(network = 'act')
@@ -155,7 +156,7 @@ otn_extract_files(
 Or download directly via its URL:
 ```{r eval=FALSE}
 otn_download(
-  url = "https://members.devel.oceantrack.org/data/repository/nsbs/detection-extracts/nsbs_matched_detections_2017.zip"
+  urls = "https://members.devel.oceantrack.org/data/repository/nsbs/detection-extracts/nsbs_matched_detections_2017.zip"
 )
 ```
 

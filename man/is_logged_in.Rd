@@ -4,7 +4,13 @@
 \alias{is_logged_in}
 \title{Check if user is logged in}
 \usage{
-is_logged_in()
+is_logged_in(network)
+}
+\arguments{
+\item{network}{Character. Lowercase code of the desired telemetry network. One of
+"otn", "act", "atap", "itag", "migramar", "nep", "npact", "pirat", or
+"otn_devel" (the OTN development server). Note that "etn", "fact", "glatos",
+"path" and "raft" are accepted, but only to produce an error and redirect you.}
 }
 \description{
 Checks for the presence of a session token in the session environment, erroring

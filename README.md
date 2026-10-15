@@ -71,8 +71,8 @@ needing to log in.
 ``` r
 library(otndata)
 
-# OTN's server (default)
-otn_list_species() |>
+# What species are tagged?
+otn_list_species("otn") |>
   head()
 #>           scientificname           commonname
 #> 1          Abramis brama                bream
@@ -135,14 +135,14 @@ otn_list_stats(network = "otn_devel")
 #> [1] 476
 #> 
 #> $rcvr_count
-#> [1] 3529
+#> [1] 3527
 ```
 
 You can also query projects according to code, country of origin,
 species, institution, node, or point of contact.
 
 ``` r
-otn_search_node("ACT") |>
+otn_search_node("act", network = "otn") |>
   head()
 #>   node collectioncode country longitude latitude
 #> 1  ACT        CTR0204     USA -72.64802 42.20387
@@ -181,16 +181,18 @@ otn_search_node("ACT") |>
 #> 6 https://matos.asascience.com/
 
 # This accepts partial matches
-otn_search_code("tail")
+otn_search_code("tail", network = "act")
 #>   node collectioncode country longitude latitude       shortname
 #> 1  ACT      TAILWINDS     USA  -73.8185  38.0705 UMCES TailWinds
 #>                                                                                longname
 #> 1 TailWinds: Team for Assessing Impacts to Living resources from offshore WIND turbineS
-#>         ocean                      website            datacenter_infourl
-#> 1 NW ATLANTIC https://tailwinds.umces.edu/ https://matos.asascience.com/
+#>         ocean                      website datacenter_infourl
+#> 1 NW ATLANTIC https://tailwinds.umces.edu/                 NA
+#>                                           institutionname
+#> 1 University of Maryland Center for Environmental Science
 
 # This does not accept partial matches
-otn_search_contact("Mike O'Brien")
+otn_search_contact("Mike O'Brien", "act")
 #>   node collectioncode country longitude latitude
 #> 1  ACT         CBBBMB     USA  -73.8150  38.0700
 #> 2  ACT      TAILWINDS     USA  -73.8185  38.0705
@@ -211,18 +213,21 @@ otn_search_contact("Mike O'Brien")
 #> 2 NW ATLANTIC                     https://tailwinds.umces.edu/
 #> 3 NW ATLANTIC https://marinebon.org/us-mbon/mid-atlantic-mbon/
 #> 4 NW ATLANTIC                                             <NA>
-#>              datacenter_infourl
-#> 1 https://matos.asascience.com/
-#> 2 https://matos.asascience.com/
-#> 3 https://matos.asascience.com/
-#> 4 https://matos.asascience.com/
+#>   datacenter_infourl                                         institutionname
+#> 1                 NA University of Maryland Center for Environmental Science
+#> 2                 NA University of Maryland Center for Environmental Science
+#> 3                 NA               Smithsonian Environmental Research Center
+#> 4                 NA                   Naval Undersea Warfare Center Newport
 ```
 
 ## Logging in
 
 You’ll need to log in to access other parts of the CMS using
 `otn_login`. This package is meant to interface with any node’s Plone
-instance. You can switch between them using the `network` argument.
+instance. You can switch between them using the `network` argument. If
+you are a member of multiple networks, you can log into all of them and
+toggle between using the `network` argument of other functions, such as
+`otn_extract_files("nsbs", network = "otn")`.
 
 ``` r
 otn_login(network = 'act')
@@ -303,12 +308,12 @@ otn_project_files(project = 'tailwinds', batch_size = 5)
 #> 3        https://data.theactnetwork.com/data/repository/tailwinds/data-and-metadata/receiver-metadata/tailwinds_otn_metadata_deployment.xlsx
 #> 4 https://data.theactnetwork.com/data/repository/tailwinds/data-and-metadata/receiver-metadata/tailwinds_otn_metadata_deployment_202404.xlsx
 #> 5                     https://data.theactnetwork.com/data/repository/tailwinds/data-and-metadata/detection-files/vr2ar_546307_20240425_1.vrl
-#>               created            modified creator     size type
-#> 1 2026-06-10 03:51:32 2026-06-10 03:51:32 krichie   2.5 KB File
-#> 2 2026-06-10 03:51:58 2026-06-10 03:51:58 krichie  41.9 KB File
-#> 3 2026-06-10 03:52:17 2026-06-10 03:52:17 krichie  37.0 KB File
-#> 4 2026-06-10 03:52:30 2026-06-10 03:52:30 krichie  36.7 KB File
-#> 5 2026-06-10 03:55:34 2026-06-10 03:55:34 krichie 751.0 KB File
+#>               created            modified network creator     size type
+#> 1 2026-06-10 03:51:32 2026-06-10 03:51:32     ACT krichie   2.5 KB File
+#> 2 2026-06-10 03:51:58 2026-06-10 03:51:58     ACT krichie  41.9 KB File
+#> 3 2026-06-10 03:52:17 2026-06-10 03:52:17     ACT krichie  37.0 KB File
+#> 4 2026-06-10 03:52:30 2026-06-10 03:52:30     ACT krichie  36.7 KB File
+#> 5 2026-06-10 03:55:34 2026-06-10 03:55:34     ACT krichie 751.0 KB File
 
 otn_extract_files(project = 'tailwinds', batch_size = 5)
 #>                                            name
@@ -329,12 +334,12 @@ otn_extract_files(project = 'tailwinds', batch_size = 5)
 #> 3 https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2023-parquet
 #> 4     https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2023.zip
 #> 5 https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2024-parquet
-#>               created            modified creator     size type
-#> 1 2026-07-28 14:22:44 2026-07-28 14:22:47  otnbot 347.2 KB File
-#> 2 2026-07-28 14:22:45 2026-07-28 14:22:48  otnbot 148.4 KB File
-#> 3 2026-06-12 13:25:31 2026-06-12 13:25:31 krichie 133.0 KB File
-#> 4 2026-06-12 13:25:49 2026-07-28 14:22:45  otnbot  96.2 KB File
-#> 5 2026-06-12 13:26:03 2026-06-12 13:26:03 krichie 174.2 KB File
+#>               created            modified network creator     size type
+#> 1 2026-07-28 14:22:44 2026-07-28 14:22:47     ACT  otnbot 347.2 KB File
+#> 2 2026-07-28 14:22:45 2026-07-28 14:22:48     ACT  otnbot 148.4 KB File
+#> 3 2026-06-12 13:25:31 2026-06-12 13:25:31     ACT krichie 133.0 KB File
+#> 4 2026-06-12 13:25:49 2026-07-28 14:22:45     ACT  otnbot  96.2 KB File
+#> 5 2026-06-12 13:26:03 2026-06-12 13:26:03     ACT krichie 174.2 KB File
 ```
 
 Or, just grab the ones modified more recently using the `since`
@@ -358,12 +363,12 @@ otn_project_files(
 #> 3        https://data.theactnetwork.com/data/repository/tailwinds/data-and-metadata/receiver-metadata/tailwinds_otn_metadata_deployment.xlsx
 #> 4 https://data.theactnetwork.com/data/repository/tailwinds/data-and-metadata/receiver-metadata/tailwinds_otn_metadata_deployment_202404.xlsx
 #> 5                     https://data.theactnetwork.com/data/repository/tailwinds/data-and-metadata/detection-files/vr2ar_546307_20240425_1.vrl
-#>               created            modified creator     size type
-#> 1 2026-06-10 03:51:32 2026-06-10 03:51:32 krichie   2.5 KB File
-#> 2 2026-06-10 03:51:58 2026-06-10 03:51:58 krichie  41.9 KB File
-#> 3 2026-06-10 03:52:17 2026-06-10 03:52:17 krichie  37.0 KB File
-#> 4 2026-06-10 03:52:30 2026-06-10 03:52:30 krichie  36.7 KB File
-#> 5 2026-06-10 03:55:34 2026-06-10 03:55:34 krichie 751.0 KB File
+#>               created            modified network creator     size type
+#> 1 2026-06-10 03:51:32 2026-06-10 03:51:32     ACT krichie   2.5 KB File
+#> 2 2026-06-10 03:51:58 2026-06-10 03:51:58     ACT krichie  41.9 KB File
+#> 3 2026-06-10 03:52:17 2026-06-10 03:52:17     ACT krichie  37.0 KB File
+#> 4 2026-06-10 03:52:30 2026-06-10 03:52:30     ACT krichie  36.7 KB File
+#> 5 2026-06-10 03:55:34 2026-06-10 03:55:34     ACT krichie 751.0 KB File
 
 otn_extract_files(
   project = 'tailwinds',
@@ -388,12 +393,12 @@ otn_extract_files(
 #> 3   https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2023.zip
 #> 4   https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2024.zip
 #> 5 https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_unqualified_detections_2023.zip
-#>               created            modified creator     size type
-#> 1 2026-07-28 14:22:44 2026-07-28 14:22:47  otnbot 347.2 KB File
-#> 2 2026-07-28 14:22:45 2026-07-28 14:22:48  otnbot 148.4 KB File
-#> 3 2026-06-12 13:25:49 2026-07-28 14:22:45  otnbot  96.2 KB File
-#> 4 2026-06-12 13:26:19 2026-07-28 14:22:47  otnbot 131.7 KB File
-#> 5 2026-06-12 13:26:45 2026-07-28 14:22:46  otnbot  52.2 KB File
+#>               created            modified network creator     size type
+#> 1 2026-07-28 14:22:44 2026-07-28 14:22:47     ACT  otnbot 347.2 KB File
+#> 2 2026-07-28 14:22:45 2026-07-28 14:22:48     ACT  otnbot 148.4 KB File
+#> 3 2026-06-12 13:25:49 2026-07-28 14:22:45     ACT  otnbot  96.2 KB File
+#> 4 2026-06-12 13:26:19 2026-07-28 14:22:47     ACT  otnbot 131.7 KB File
+#> 5 2026-06-12 13:26:45 2026-07-28 14:22:46     ACT  otnbot  52.2 KB File
 ```
 
 Your can also text search for only certain files with the `text`
@@ -423,12 +428,12 @@ otn_extract_files(
 #> 3   https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2024-parquet
 #> 4   https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_qualified_detections_2023-parquet
 #> 5      https://data.theactnetwork.com/data/repository/tailwinds/detection-extracts/tailwinds_unqualified_detections-parquet
-#>               created            modified creator     size type
-#> 1 2026-06-12 13:26:59 2026-06-12 13:26:59 krichie  62.7 KB File
-#> 2 2026-06-12 13:26:33 2026-06-12 13:26:33 krichie 602.3 KB File
-#> 3 2026-06-12 13:26:03 2026-06-12 13:26:03 krichie 174.2 KB File
-#> 4 2026-06-12 13:25:31 2026-06-12 13:25:31 krichie 133.0 KB File
-#> 5 2026-07-28 14:22:45 2026-07-28 14:22:48  otnbot 148.4 KB File
+#>               created            modified network creator     size type
+#> 1 2026-06-12 13:26:59 2026-06-12 13:26:59     ACT krichie  62.7 KB File
+#> 2 2026-06-12 13:26:33 2026-06-12 13:26:33     ACT krichie 602.3 KB File
+#> 3 2026-06-12 13:26:03 2026-06-12 13:26:03     ACT krichie 174.2 KB File
+#> 4 2026-06-12 13:25:31 2026-06-12 13:25:31     ACT krichie 133.0 KB File
+#> 5 2026-07-28 14:22:45 2026-07-28 14:22:48     ACT  otnbot 148.4 KB File
 ```
 
 ## Download files
@@ -443,14 +448,14 @@ otn_extract_files(
   batch_size = 1
 ) |>
   otn_download()
-#> ℹ Files saved to ./tailwinds_qualified_detections.parquet.
+#> ✔ 1 file(s) saved to './tailwinds_qualified_detections.parquet'.
 ```
 
 Or download directly via its URL:
 
 ``` r
 otn_download(
-  url = "https://members.devel.oceantrack.org/data/repository/nsbs/detection-extracts/nsbs_matched_detections_2017.zip"
+  urls = "https://members.devel.oceantrack.org/data/repository/nsbs/detection-extracts/nsbs_matched_detections_2017.zip"
 )
 ```
 

@@ -4,12 +4,17 @@
 \alias{otn_upload}
 \title{Upload a file to the Plone CMS}
 \usage{
-otn_upload(file_path, project)
+otn_upload(file_path, project, network = NULL)
 }
 \arguments{
 \item{file_path}{Character. Location of the file to be uploaded.}
 
 \item{project}{Character. The project code.}
+
+\item{network}{Character. Lowercase code of the desired telemetry network. One of
+"otn", "act", "atap", "itag", "migramar", "nep", "npact", "pirat", or
+"otn_devel" (the OTN development server). Note that "etn", "fact", "glatos",
+"path" and "raft" are accepted, but only to produce an error and redirect you.}
 }
 \value{
 Silently returns a vector of file locations.

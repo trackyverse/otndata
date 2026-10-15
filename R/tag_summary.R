@@ -20,6 +20,7 @@
 otn_tag_summary <- function(
   project = NULL,
   matched = NULL,
+  network = NULL,
   ...
 ) {
   if (all(is.null(project), is.null(matched))) {
@@ -30,6 +31,9 @@ otn_tag_summary <- function(
 
   # Project ----
   if (is.null(matched)) {
+    network <- fix_null_network(network)
+    is_logged_in(network)
+
     cli::cli_alert_info("Finding data extract files...")
     extract_files <- otn_extract_files(project = project)
     if (any(grepl(".*matched_detections.*parquet$", extract_files$url))) {
