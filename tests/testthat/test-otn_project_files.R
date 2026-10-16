@@ -145,6 +145,11 @@ test_that("otn_project_files attaches bearer token when authenticated", {
 })
 
 test_that("otn_project_files aborts with prompt message on 401/403 status when token is missing", {
+  # Reset network state in otn_global to ensure token is NULL
+  otn_glob <- asNamespace("otndata")$otn_global
+  otn_glob$testthat <- new.env(parent = emptyenv())
+  otn_glob$testthat$server_url <- "https://testthat.otn.org"
+
   local_mocked_bindings(
     fix_null_network = function(network) {
       if (is.null(network)) "testthat" else network
