@@ -1,0 +1,145 @@
+# Authentication code flow
+
+This document serves as a walkthrough of how `otndata`’s authentication
+framework is set up. I welcome contributions, but I worry that this flow
+is a bit opaque and might trip someone up right out of the gate. As
+such, it is mainly geared toward those who wish to contribute to, or
+develop with, `otndata`. This package is intended to interface with the
+Plone API, so what’s written here will be a mix of things you can find
+in that documentation and `otndata`’s wrapper on top of that.
+
+## Authentication code flow
+
+In order to log in, we must POST our username and password to the Plone
+CMS REST API. To get and access user credentials, a lot of inspiration
+(and code!) has been taken from the [tidycensus
+package](https://github.com/walkerke/tidycensus/blob/2be9335ffa6d18edb192ba64fc9ffbf7ed9dfb51/R/helpers.R#L537),
+which writes credentials to the user’s `.Renviron` file for use across
+sessions. The upside to this method is that it is easy to code in base
+R; the downside is that secrets are stored in plain text on the user’s
+machine. This is universally considered unacceptable, but I’ve decided
+that interacting with telemetry data low-stakes enough to take the risk.
+
+To allow users to store credentials for multiple networks, credentials
+are written to `OTN_PASS.{network}` and `OTN_USER.{network}`
+environmental variables. Again, these are stored in plain text in the
+users `.Renviron` file if the user wishes to use them across sessions.
+When an R session is started, the `.Renviron` file is loaded along with
+other system variables, meaning the credentials can be accessed via
+`Sys.getenv("OTN_USER.{network}")` or
+`Sys.getenv("OTN_PASS.{network}")`.
+
+### The “global environment”
+
+“Setting” credentials takes a lot of inspiration from
+[`ggplot2::set_theme`](https://github.com/tidyverse/ggplot2/blob/737be17f43bebac02ccb119753c1fee267572443/R/theme-current.R#L96),
+which uses a “`ggplot_global`” environment to hold user-set options for
+`ggplot2`:
+
+> Environment that holds various global variables and settings for
+> ggplot, such as the current theme. It is not exported and should not
+> be directly manipulated by other packages.
+> `ggplot_global <- new.env(parent = emptyenv())`
+
+Mirroring this, we have an [`otn_global`
+envrionment](https://github.com/trackyverse/otndata/blob/647953a438ea4950c2d22838f212acd083ef0681/R/otn-global.R#L2).
+You can see what’s inside of it like so:
+
+``` r
+
+library(otndata)
+
+# Note the 3 colons
+ls(otndata:::otn_global)
+#> [1] "act"       "otn_devel"
+```
+
+If you use
+[`devtools::load_all()`](https://devtools.r-lib.org/reference/load_all.html),
+you can interact with it like you would an R list.
+
+``` r
+
+otn_global[["fake_info"]] <- 1234
+
+ls(otn_global)
+#> [1] "fake_info"
+otn_global$fake_info
+#> [1] 1234
+```
+
+It is in this way that we manage our credentials within the R session.
+
+### Logging in
+
+When the user runs `otn_login("{network}")`, we first use `network` to
+figure out what the URL of the specific Plone instance is. This URL is
+[placed into the `otn_global`
+environment](https://github.com/trackyverse/otndata/blob/647953a438ea4950c2d22838f212acd083ef0681/R/server_url.R#L74)
+under `otn_global${network}$server_url`. We can now think of
+`otn_global${network}` as a list that will hold information about the
+server, including our to-be-found session token.
+
+Next, `otndata` looks for the `OTN_USER.{network}` and
+`OTN_PASS.{network}` environment variables and runs a temporary version
+of `otn_set_credentials` if they aren’t found. If they aren’t found,
+this places your credentials in your current R session’s environment in
+plain text such that these will be wiped when you close or restart R.
+
+Finally, [we POST our username (as “login”) and password (as “password”)
+to the Plone
+CMS](https://github.com/trackyverse/otndata/blob/647953a438ea4950c2d22838f212acd083ef0681/R/authentication.R#L39)
+using the credentials we’ve grabbed and server URL we’ve sussed out. If
+the login is successful an authorization token is returned that we must
+attach to all requests that need the user to be logged in. `otndata`
+places this token in the `otn_global` environment under its respective
+network. We wind up with something that looks like this, assuming you’ve
+just logged into the [ACT Network’s data
+portal](https://data.theactnetwork.com):
+
+    #> ✔ Login successful!
+
+``` r
+
+ls(otndata:::otn_global)
+#> [1] "act"       "otn_devel"
+
+otndata:::otn_global$act
+#> $server_url
+#> [1] "https://data.theactnetwork.com"
+#> 
+#> $token
+#> [1] "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJvYnJpZW4iLCJleHAiOjE3OTIyMDQ3NTUsImZ1bGxuYW1lIjoiTWlrZSBPJ0JyaWVuIn0.ZndqyvzxtJO-pH20HOHxKMOdu-mX8v-i5zfXs2aXxGQ"
+```
+
+### Multiple Networks
+
+Setting thing up in this way allows us to:
+
+- Shield critical information from most actions of the user, but allow
+  them to change things if they know what they’re doing
+- Repeatedly use the same token
+- Log into multiple networks
+
+As server information and the authentication token are stored under the
+network, we can log into multiple networks in the same session and
+extract the token via `otn_global[["{network}"]]$token`. Note that while
+I’m using `otndata:::` here, you do not need to do this in the code or
+while developing.
+
+``` r
+
+otn_login("otn_devel")
+#> ✔ Login successful!
+
+ls(otndata:::otn_global)
+#> [1] "act"       "otn_devel"
+otndata:::otn_global$otn_devel
+#> $server_url
+#> [1] "https://members.devel.oceantrack.org"
+#> 
+#> $token
+#> [1] "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtb2JyaWVuIiwiZXhwIjoxNzkyMjA0NzU1LCJmdWxsbmFtZSI6Ik1pa2UgTydCcmllbiJ9.Kll_dgk_zsWfDa28IquaZvGca2ojlkDIwnNnan2zr2E"
+otndata:::otn_global[["otn_devel"]]$token
+#> [1] "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtb2JyaWVuIiwiZXhwIjoxNzkyMjA0NzU1LCJmdWxsbmFtZSI6Ik1pa2UgTydCcmllbiJ9.Kll_dgk_zsWfDa28IquaZvGca2ojlkDIwnNnan2zr2E"
+```

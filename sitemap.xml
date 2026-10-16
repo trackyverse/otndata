@@ -1,8 +1,10 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://otndata.obrien.page/404.html</loc></url>
+<url><loc>https://otndata.obrien.page/CONTRIBUTING.html</loc></url>
 <url><loc>https://otndata.obrien.page/LICENSE-text.html</loc></url>
 <url><loc>https://otndata.obrien.page/LICENSE.html</loc></url>
 <url><loc>https://otndata.obrien.page/articles/advanced_code.html</loc></url>
+<url><loc>https://otndata.obrien.page/articles/authentication.html</loc></url>
 <url><loc>https://otndata.obrien.page/articles/index.html</loc></url>
 <url><loc>https://otndata.obrien.page/articles/quick_start.html</loc></url>
 <url><loc>https://otndata.obrien.page/authors.html</loc></url>
