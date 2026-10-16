@@ -7,6 +7,7 @@
 #'   a character vector of file paths of your matched detections. These can be
 #'   parquet, CSVs, or zipped folders.
 #' @param ... Arguments passed to \code{otndo::make_tag_push_summary}
+#' @inheritParams .otn_server_url
 #'
 #' @export
 #' @examples

@@ -7,7 +7,8 @@
 #'   or your node does not use an OTN-style Plone CMS.
 #' @param deployment File path of user-supplied master OTN receiver deployment metadata.
 #' @param ... Arguments passed to \code{otndo::make_receiver_push_summary}
-#' @inheritParams otn_extract_files project
+#' @inheritParams otn_extract_files
+#' @inheritParams .otn_server_url
 #'
 #' @section No files provided:
 #'

@@ -24,6 +24,11 @@ or your node does not use an OTN-style Plone CMS.}
 
 \item{deployment}{File path of user-supplied master OTN receiver deployment metadata.}
 
+\item{network}{Character. Lowercase code of the desired telemetry network. One of
+"otn", "act", "atap", "itag", "migramar", "nep", "npact", "pirat", or
+"otn_devel" (the OTN development server). Note that "etn", "fact", "glatos",
+"path" and "raft" are accepted, but only to produce an error and redirect you.}
+
 \item{...}{Arguments passed to \code{otndo::make_receiver_push_summary}}
 }
 \description{
