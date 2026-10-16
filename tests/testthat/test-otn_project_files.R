@@ -28,7 +28,10 @@ test_that("otn_project_files constructs GET @search query when no filters are ap
     req_perform = function(req) {
       # httr2 defaults to NULL for standard GET requests
       expect_equal(req$method, NULL)
-      expect_true(grepl("/data-and-metadata/@search", req$url))
+      expect_true(grepl(
+        "/data-and-metadata/@search",
+        utils::URLdecode(req$url)
+      ))
       expect_true(grepl("portal_type=File", req$url))
 
       httr2::response(
@@ -82,7 +85,10 @@ test_that("otn_project_files constructs POST @querystring-search query when text
     req_perform = function(req) {
       # Verify filtered POST request route
       expect_equal(req$method, "POST")
-      expect_true(grepl("/data-and-metadata/@querystring-search", req$url))
+      expect_true(grepl(
+        "/data-and-metadata/@querystring-search",
+        utils::URLdecode(req$url)
+      ))
 
       # Verify JSON query structure
       query_list <- req$body$data$query

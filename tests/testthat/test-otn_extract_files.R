@@ -26,7 +26,10 @@ test_that("otn_extract_files targets detection-extracts section", {
 
   local_mocked_bindings(
     req_perform = function(req) {
-      expect_true(grepl("/detection-extracts/@search", req$url))
+      expect_true(grepl(
+        "/detection-extracts/@search",
+        utils::URLdecode(req$url)
+      ))
 
       httr2::response(
         status_code = 200,
