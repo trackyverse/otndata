@@ -1,7 +1,7 @@
 ^LICENSE\.md$
 ^README\.Rmd$
 ^_pkgdown\.yml$
-^vignettes/_act_network\.Rmd$
+^vignettes/_*\.Rmd$
 ^vignettes/precompile\.R$
 ^docs$
 ^pkgdown$

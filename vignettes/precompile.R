@@ -11,7 +11,7 @@
 # https://github.com/r-lib/pkgdown/issues/1593
 
 # Workflow:
-#   1. Add the _(.*).Rmd file to .Rbuildignore
+#   1. Add ^vignettes/_*\.Rmd$ AND ^vignettes/precompile\.R$ to .Rbuildignore
 #   2. Edit the _(.*).Rmd file
 #   3. Click RStudio "knit" button as needed
 #   4. When ready to add changes, run the respective "knit()" below
