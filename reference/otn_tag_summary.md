@@ -22,6 +22,14 @@ otn_tag_summary(project = NULL, matched = NULL, network = NULL, ...)
   also accepts a character vector of file paths of your matched
   detections. These can be parquet, CSVs, or zipped folders.
 
+- network:
+
+  Character. Lowercase code of the desired telemetry network. One of
+  "otn", "act", "atap", "itag", "migramar", "nep", "npact", "pirat", or
+  "otn_devel" (the OTN development server). Note that "etn", "fact",
+  "glatos", "path" and "raft" are accepted, but only to produce an error
+  and redirect you.
+
 - ...:
 
   Arguments passed to
