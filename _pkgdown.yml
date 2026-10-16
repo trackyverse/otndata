@@ -35,3 +35,11 @@ reference:
       - .otn_list
       - .otn_search
       - build_namespace
+articles:
+  - title: Articles
+    navbar: ~
+    contents:
+      - quick_start
+      - advanced_code
+      - authentication
+      

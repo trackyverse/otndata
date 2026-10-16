@@ -27,5 +27,6 @@ setwd(file.path(orig_wd, "vignettes"))
 
 knit("_quick_start.Rmd", "quick_start.Rmd")
 knit("_advanced_code.Rmd", "advanced_code.Rmd")
+knit("_authentication.Rmd", "authentication.Rmd")
 
 setwd(orig_wd)
