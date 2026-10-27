@@ -40,7 +40,7 @@ otn_tag_summary <- function(
     }
 
     cli::cli_alert_info("Finding data extract files...")
-    extract_files <- otn_extract_files(project = project)
+    extract_files <- otn_extract_files(project = project, network = network)
     if (any(grepl(".*matched_detections.*parquet$", extract_files$url))) {
       cli::cli_alert_success("   Files found.")
     } else {
