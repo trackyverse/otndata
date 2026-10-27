@@ -33,7 +33,11 @@ otn_tag_summary <- function(
   # Project ----
   if (is.null(matched)) {
     network <- fix_null_network(network)
-    is_logged_in(network)
+    server <- otn_global[[network]]$server_url
+
+    if (is.null(server) & !is.null(network)) {
+      server <- .otn_server_url(network, set = FALSE)
+    }
 
     cli::cli_alert_info("Finding data extract files...")
     extract_files <- otn_extract_files(project = project)
