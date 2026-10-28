@@ -15,7 +15,7 @@ otn_download(files = NULL, urls = NULL, outdir = ".")
 
   a data.frame returned by by `otn_project_files` or
   `otn_extract_files`. Can have been filtered or edited, but must have
-  columns of "url" and "name".
+  columns of "url" and "network".
 
 - urls:
 
