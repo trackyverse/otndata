@@ -60,11 +60,6 @@ otn_receiver_summary <- function(
   # Project ----
   if (any(is.null(qualified), is.null(unqualified))) {
     network <- fix_null_network(network)
-    server <- otn_global[[network]]$server_url
-
-    if (is.null(server) & !is.null(network)) {
-      server <- .otn_server_url(network, set = FALSE)
-    }
 
     cli::cli_alert_info("Finding data extract files...")
     extract_files <- otn_extract_files(project = project, network = network)
@@ -100,6 +95,8 @@ otn_receiver_summary <- function(
   # Deployment log ----
   ##  Download deployment metadata if not provided
   if (is.null(deployment)) {
+    network <- fix_null_network(network)
+
     project_files <- otn_project_files(project = project, network = network)
 
     deployment <- otn_download(

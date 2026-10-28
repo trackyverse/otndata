@@ -21,15 +21,14 @@
     stats = "header_stats.json"
   )
 
+  query <- endpoint |>
+    .otn_api(server = .otn_server_url(network, set = FALSE))
+
   if (type == "my_projects") {
     is_logged_in(network)
 
-    query <- endpoint |>
-      .otn_api(server = .otn_server_url(network, set = FALSE)) |>
+    query <- query |>
       httr2::req_auth_bearer_token(otn_global[[network]]$token)
-  } else {
-    query <- endpoint |>
-      .otn_api(server = .otn_server_url(network, set = FALSE))
   }
 
   query |>
