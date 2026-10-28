@@ -5,7 +5,7 @@
 #'
 #' @param files a data.frame returned by by `otn_project_files` or
 #'   `otn_extract_files`. Can have been filtered or edited, but must have columns
-#'   of "url" and "name".
+#'   of "url" and "network".
 #' @param urls The URL of the file as returned by `otn_project_files` or
 #'   `otn_extract_files`
 #' @param outdir The output directory (where you want the file to be saved).
@@ -71,7 +71,7 @@ otn_download <- function(files = NULL, urls = NULL, outdir = '.') {
   }
 
   if (!dir.exists(outdir)) {
-    dir.create(outdir)
+    dir.create(outdir, recursive = TRUE)
 
     cli::cli_alert_info("Directory created: {outdir}.")
   }
