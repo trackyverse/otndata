@@ -16,6 +16,11 @@ knitr::opts_chunk$set(
 # otndata
 
 <!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![name status badge](https://trackyverse.r-universe.dev/badges/:name)](https://trackyverse.r-universe.dev/)
+[![otndata status badge](https://trackyverse.r-universe.dev/otndata/badges/version)](https://trackyverse.r-universe.dev/otndata)
+[![R-CMD-check](https://github.com/trackyverse/otndata/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/trackyverse/otndata/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/trackyverse/otndata/graph/badge.svg)](https://app.codecov.io/gh/trackyverse/otndata)
 <!-- badges: end -->
 
 `otndata` is a wrapper around the Ocean Tracking Network's Plone content management system. The following data portals are nominally supported, though some things might not work depending on the optional add-ons used by the various networks. Because of this, [bug reports are really, really, _really_ appreciated](https://github.com/trackyverse/otndata/issues)!!

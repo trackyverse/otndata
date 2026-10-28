@@ -5,6 +5,15 @@
 
 <!-- badges: start -->
 
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![name status
+badge](https://trackyverse.r-universe.dev/badges/:name)](https://trackyverse.r-universe.dev/)
+[![otndata status
+badge](https://trackyverse.r-universe.dev/otndata/badges/version)](https://trackyverse.r-universe.dev/otndata)
+[![R-CMD-check](https://github.com/trackyverse/otndata/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/trackyverse/otndata/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/trackyverse/otndata/graph/badge.svg)](https://app.codecov.io/gh/trackyverse/otndata)
 <!-- badges: end -->
 
 `otndata` is a wrapper around the Ocean Tracking Network’s Plone content
@@ -86,26 +95,26 @@ otn_list_species("otn") |>
 otn_list_projects(network = "act") |>
   head()
 #>   node collectioncode country longitude latitude
-#> 1  ACT        NJWPEFH     USA -75.46144 39.60147
-#> 2  ACT     SBUSOMASCO     USA -73.67922 40.47010
-#> 3  ACT        NJDEPSB     USA -74.26016 39.60989
-#> 4  ACT          WTAPS     USA -76.21810 37.34658
-#> 5  ACT     ASIPORBEAG     USA -73.81850 38.07050
-#> 6  ACT         SBURAA     USA -73.81850 38.07050
-#>                               shortname
-#> 1        AKRF Sand-Wave Habitat Phase 1
-#> 2 Dusky Shark Habitat Use and Migration
-#> 3                   NJ DEP striped bass
-#> 4                      WTAPS Blue Crabs
-#> 5           ASI - Porbeagle Shark Study
-#> 6                  SBU HRF Sturgeon RAA
-#>                                                                                                                                                       longname
-#> 1 Compensatory Mitigation for the Loss of Sand-Wave Habitat due to Dredging at the New Jersey Wind Port – Phase 1 - at Artificial Island on the Delaware River
-#> 2                                                                                                                        Dusky Shark Habitat Use and Migration
-#> 3                                                                     Spatial and temporal movements of Atlantic striped bass (Morone saxatilis) in New Jersey
-#> 4                                                          Blue Crab Overwintering and placement of dredge material in the Wolf Trap Alternate Placement Site.
-#> 5                                                                                  This study involves the porbeagle shark in New England and adjacent waters.
-#> 6                                                 Defining the ecological and conservation importance of the Rockaway Atlantic Sturgeon aggregation area (RAA)
+#> 1  ACT        SOFLONC     USA -76.67000 34.72500
+#> 2  ACT     SBUSOMASCO     USA -75.10195 37.65009
+#> 3  ACT     UNESACOBAY     USA -70.38000 43.46500
+#> 4  ACT          WTAPS     USA -76.17964 37.29108
+#> 5  ACT     ASIPORBEAG     USA -70.87500 42.03000
+#> 6  ACT      VIMS4AMIA     USA -76.61441 37.60105
+#>                                  shortname
+#> 1     ECU Southern Flounder Spawning Study
+#> 2 SBUSOMASCO - SBU Dusky Shark Habitat Use
+#> 3                   UNE Saco River Estuary
+#> 4                 WTAPS - UMCES Blue Crabs
+#> 5              ASI - Porbeagle Shark Study
+#> 6                VIMS Bowfin and Snakehead
+#>                                                                                                                       longname
+#> 1 Identification of the Spawning Grounds and Offshore Migration Corridor Used by the North Carolina Stock of Southern Flounder
+#> 2                                                                                        Dusky Shark Habitat Use and Migration
+#> 3                           Tracking seasonal movements of anadromous fishes in the Saco River system using acoustic telemetry
+#> 4                          Blue Crab Overwintering and placement of dredge material in the Wolf Trap Alternate Placement Site.
+#> 5                                                  This study involves the porbeagle shark in New England and adjacent waters.
+#> 6                                                 Habitat utilization and seasonal movements of Bowfin and Northern Snakehead.
 #>         ocean                               website datacenter_infourl
 #> 1 NW ATLANTIC                                  <NA>                 NA
 #> 2 NW ATLANTIC                                  <NA>                 NA
@@ -114,12 +123,12 @@ otn_list_projects(network = "act") |>
 #> 5 NW ATLANTIC http://www.atlanticsharkinstitute.org                 NA
 #> 6 NW ATLANTIC                                  <NA>                 NA
 #>                                           institutionname
-#> 1                                               AKRF Inc.
+#> 1                                East Carolina University
 #> 2                                  Stony Brook University
-#> 3       New Jersey Department of Environmental Protection
+#> 3                               University of New England
 #> 4 University of Maryland Center for Environmental Science
 #> 5                                Atlantic Shark Institute
-#> 6                                  Stony Brook University
+#> 6                    Virginia Institute of Marine Science
 
 otn_list_stats(network = "otn_devel")
 #> $project_count
@@ -135,7 +144,7 @@ otn_list_stats(network = "otn_devel")
 #> [1] 476
 #> 
 #> $rcvr_count
-#> [1] 3527
+#> [1] 3522
 ```
 
 You can also query projects according to code, country of origin,
@@ -183,7 +192,7 @@ otn_search_node("act", network = "otn") |>
 # This accepts partial matches
 otn_search_code("tail", network = "act")
 #>   node collectioncode country longitude latitude       shortname
-#> 1  ACT      TAILWINDS     USA  -73.8185  38.0705 UMCES TailWinds
+#> 1  ACT      TAILWINDS     USA   -74.685   38.325 UMCES TailWinds
 #>                                                                                longname
 #> 1 TailWinds: Team for Assessing Impacts to Living resources from offshore WIND turbineS
 #>         ocean                      website datacenter_infourl
@@ -193,31 +202,90 @@ otn_search_code("tail", network = "act")
 
 # This does not accept partial matches
 otn_search_contact("Mike O'Brien", "act")
-#>   node collectioncode country longitude latitude
-#> 1  ACT         CBBBMB     USA  -73.8150  38.0700
-#> 2  ACT      TAILWINDS     USA  -73.8185  38.0705
-#> 3  ACT         MAMBON     USA  -73.8185  38.0705
-#> 4  ACT       NAVYKENN     USA  -69.7800  43.7750
-#>                            shortname
-#> 1 UMCES Chesapeake Backbone, Mid-Bay
-#> 2                    UMCES TailWinds
-#> 3                  Mid-Atlantic MBON
-#> 4   Navy Kennebec ME Telemetry Array
-#>                                                                                         longname
-#> 1                            Building a Mainstem Chesapeake Bay Telemetry Array: Mid-Bay Segment
-#> 2          TailWinds: Team for Assessing Impacts to Living resources from offshore WIND turbineS
-#> 3                Mid-Atlantic MBON: Dynamic Biodiversity and Telemetry Data for a Changing Coast
-#> 4 Naval Undersea Warfare Center (NUWC) Kennebec River and Offshore Acoustic Telemetry Monitoring
-#>         ocean                                          website
-#> 1 NW ATLANTIC                                             <NA>
-#> 2 NW ATLANTIC                     https://tailwinds.umces.edu/
-#> 3 NW ATLANTIC https://marinebon.org/us-mbon/mid-atlantic-mbon/
-#> 4 NW ATLANTIC                                             <NA>
-#>   datacenter_infourl                                         institutionname
-#> 1                 NA University of Maryland Center for Environmental Science
-#> 2                 NA University of Maryland Center for Environmental Science
-#> 3                 NA               Smithsonian Environmental Research Center
-#> 4                 NA                   Naval Undersea Warfare Center Newport
+#>    node collectioncode country longitude latitude
+#> 1   ACT          MDBSB     USA -74.41074 37.98817
+#> 2   ACT          PASBT     USA -76.43000 38.77727
+#> 3   ACT        PAXSB08     USA -76.55903 38.41000
+#> 4   ACT         HRSB04     USA -73.75500 42.45000
+#> 5   ACT         MAMBON     USA -74.64000 38.35000
+#> 6   ACT         HUDRSB     USA -73.91500 41.66000
+#> 7   ACT        USWTRBM     USA -74.75000 38.35500
+#> 8   ACT       NAVYKENN     USA -69.74000 43.90500
+#> 9   ACT          MDWEA     USA -73.45500 40.37500
+#> 10  ACT         CBBBMB     USA -76.32500 38.31500
+#> 11  ACT      TAILWINDS     USA -74.68500 38.32500
+#> 12  ACT         HRSB09     USA -73.99000 41.19500
+#> 13  ACT       MDWEAMAM     USA -74.63500 38.34500
+#>                                       shortname
+#> 1  UMCES Black Sea Bass & Offshore Construction
+#> 2    UMCES Potomac River Striped Bass Migration
+#> 3            UMCES Striped Bass Thermal Squeeze
+#> 4  UMCES Resident Hudson Striped Bass Migration
+#> 5                             Mid-Atlantic MBON
+#> 6     UMCES-NYSDEC Hudson Striped Bass Spawning
+#> 7                           US Wind MarWin TRBM
+#> 8              Navy Kennebec ME Telemetry Array
+#> 9               UMCES BOEM Offshore Wind Energy
+#> 10           UMCES Chesapeake Backbone, Mid-Bay
+#> 11                              UMCES TailWinds
+#> 12  UMCES Lower Hudson Striped Bass Contingents
+#> 13          UMCES BOEM Marine Mammal Monitoring
+#>                                                                                                                                longname
+#> 1         Influence of Turbine Construction Noise on Black Sea Bass Displacement and Physiological Condition in the MD Wind Energy Area
+#> 2                                                                           PAST: The Potomac and Atlantic Striped Bass Telemetry Study
+#> 3                                                   Test of The Thermal Niche-Oxygen Squeeze Hypothesis for Chesapeake Bay Striped Bass
+#> 4                                                                              Migration Patterns of Resident Hudson River Striped Bass
+#> 5                                                       Mid-Atlantic MBON: Dynamic Biodiversity and Telemetry Data for a Changing Coast
+#> 6                                                                   Spawning Behavior and Ocean Migrations by Hudson River Striped Bass
+#> 7                                                                         US Wind MarWin MetOcean Buoy and Trawl-Resistant Bottom Mount
+#> 8                                        Naval Undersea Warfare Center (NUWC) Kennebec River and Offshore Acoustic Telemetry Monitoring
+#> 9           Movement and Habitat Selection by Migratory Marine Fishes within the Maryland Wind Energy Area and Adjacent Reference Sites
+#> 10                                                                  Building a Mainstem Chesapeake Bay Telemetry Array: Mid-Bay Segment
+#> 11                                                TailWinds: Team for Assessing Impacts to Living resources from offshore WIND turbineS
+#> 12                                                            Striped Bass Habitat Use and Migrations in the Lower Hudson River Estuary
+#> 13 Add-on to: Determining Habitat Use by Marine Mammals and Ambient Noise Levels Using Passive Acoustic Monitoring Offshore of Maryland
+#>          ocean
+#> 1  NW ATLANTIC
+#> 2  NW ATLANTIC
+#> 3  NW ATLANTIC
+#> 4  NW ATLANTIC
+#> 5  NW ATLANTIC
+#> 6  NW ATLANTIC
+#> 7  NW ATLANTIC
+#> 8  NW ATLANTIC
+#> 9  NW ATLANTIC
+#> 10 NW ATLANTIC
+#> 11 NW ATLANTIC
+#> 12 NW ATLANTIC
+#> 13 NW ATLANTIC
+#>                                                                          website
+#> 1                                                                           <NA>
+#> 2                                     http://fishconnectivity.cbl.umces.edu/PAST
+#> 3                                                                           <NA>
+#> 4                                                                           <NA>
+#> 5                               https://marinebon.org/us-mbon/mid-atlantic-mbon/
+#> 6                                                                           <NA>
+#> 7                                  https://remote.normandeau.com/uswind_home.php
+#> 8                                                                           <NA>
+#> 9  https://www.govinfo.gov/app/details/GOVPUB-I-e41f0ebd0487ba48b521a21a7ae45ec5
+#> 10                                                                          <NA>
+#> 11                                                  https://tailwinds.umces.edu/
+#> 12                                                                          <NA>
+#> 13                      https://espis.boem.gov/final%20reports/BOEM_2019-018.pdf
+#>    datacenter_infourl                                         institutionname
+#> 1                  NA University of Maryland Center for Environmental Science
+#> 2                  NA University of Maryland Center for Environmental Science
+#> 3                  NA University of Maryland Center for Environmental Science
+#> 4                  NA University of Maryland Center for Environmental Science
+#> 5                  NA               Smithsonian Environmental Research Center
+#> 6                  NA University of Maryland Center for Environmental Science
+#> 7                  NA      Mid-Atlantic Acoustic Telemetry Observation System
+#> 8                  NA                   Naval Undersea Warfare Center Newport
+#> 9                  NA University of Maryland Center for Environmental Science
+#> 10                 NA University of Maryland Center for Environmental Science
+#> 11                 NA University of Maryland Center for Environmental Science
+#> 12                 NA University of Maryland Center for Environmental Science
+#> 13                 NA University of Maryland Center for Environmental Science
 ```
 
 ## Logging in
