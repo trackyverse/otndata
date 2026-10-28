@@ -1,10 +1,23 @@
 #' Create a fake network and temporary otn_global environment
-setup_otn_env <- function(network = "testthat", token = NULL) {
+setup_otn_env <- function(
+  network = "testthat",
+  token = NULL,
+  server_url = NULL,
+  clear_all = TRUE
+) {
   otn_glob <- asNamespace("otndata")$otn_global
-  otn_glob[[network]] <- new.env(parent = emptyenv())
-  otn_glob[[network]]$server_url <- paste0("https://", network, ".otn.org")
-  otn_glob[[network]]$token <- token
-  invisible(otn_glob[[network]])
+
+  if (clear_all) {
+    rm(list = ls(otn_glob), envir = otn_glob)
+  }
+
+  net_env <- new.env(parent = emptyenv())
+  if (!is.null(token)) {
+    net_env$token <- token
+  }
+  net_env$server_url <- server_url %||% paste0("https://", network, ".otn.org")
+
+  otn_glob[[network]] <- net_env
 }
 
 #' Mocks for network & API routing

@@ -14,6 +14,12 @@ otn_upload <- function(file_path, project, network = NULL) {
   network <- fix_null_network(network)
   is_logged_in(network)
 
+  server <- otn_global[[network]]$server_url
+
+  if (is.null(server) & !is.null(network)) {
+    server <- .otn_server_url(network, set = FALSE)
+  }
+
   # Fail quickly if file is too large
   file_size <- file.info(file_path)$size
   size_check <- file_size > 5e8
@@ -72,7 +78,7 @@ otn_upload <- function(file_path, project, network = NULL) {
       }
 
       project_endpoint |>
-        .otn_api() |>
+        .otn_api(server = server) |>
         httr2::req_headers(Accept = "application/json") |>
         httr2::req_auth_bearer_token(otn_global[[network]]$token) |>
         httr2::req_body_json(payload) |>
@@ -93,7 +99,7 @@ otn_upload <- function(file_path, project, network = NULL) {
   )
 
   if (length(requests) == 1) {
-    responses <- httr2::req_perform(requests[[1]])
+    responses <- list(httr2::req_perform(requests[[1]]))
   } else {
     responses <- httr2::req_perform_parallel(
       requests,

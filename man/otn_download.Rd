@@ -9,7 +9,7 @@ otn_download(files = NULL, urls = NULL, outdir = ".")
 \arguments{
 \item{files}{a data.frame returned by by \code{otn_project_files} or
 \code{otn_extract_files}. Can have been filtered or edited, but must have columns
-of "url" and "name".}
+of "url" and "network".}
 
 \item{urls}{The URL of the file as returned by \code{otn_project_files} or
 \code{otn_extract_files}}
