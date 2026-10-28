@@ -138,3 +138,123 @@ test_that("otn_download cleans up local file artifact and warns when HTML login 
   expect_equal(res, character(0))
   expect_false(file.exists(file.path(tmp_dir, "protected_file.csv")))
 })
+
+test_that("otn_download detects HTML login pages via fallback readLines inspection (line 66)", {
+  setup_otn_env()
+  mock_otn_bindings()
+
+  tmp_dir <- tempfile(pattern = "mock_out_")
+  dir.create(tmp_dir)
+  on.exit(unlink(tmp_dir, recursive = TRUE), add = TRUE)
+
+  # Create an extract file entry
+  files_df <- data.frame(
+    url = "https://testthat.otn.org/files/data.parquet",
+    network = "testthat"
+  )
+
+  # Mock req_perform_parallel to write HTML content into destination file
+  # but supply a non-HTML response header to force line 66 evaluation
+  local_mocked_bindings(
+    req_perform_parallel = function(requests, paths, on_error = "continue") {
+      writeLines(
+        c("<!DOCTYPE html>", "<html><body>Login</body></html>"),
+        paths[[1]]
+      )
+      list(
+        httr2::response(
+          status_code = 200,
+          headers = list(`content-type` = "application/octet-stream")
+        )
+      )
+    },
+    .package = "httr2"
+  )
+
+  expect_warning(
+    res <- otn_download(files = files_df, outdir = tmp_dir),
+    regexp = "requires authentication"
+  )
+
+  expect_equal(length(res), 0)
+})
+
+test_that("otn_download unwraps httr2_http error conditions (line 111)", {
+  setup_otn_env()
+  mock_otn_bindings()
+
+  tmp_dir <- tempfile(pattern = "mock_out_")
+  dir.create(tmp_dir)
+  on.exit(unlink(tmp_dir, recursive = TRUE), add = TRUE)
+
+  files_df <- data.frame(
+    url = "https://testthat.otn.org/files/data.parquet",
+    network = "testthat"
+  )
+
+  # Construct an httr2_http error object containing $resp with status 401
+  mock_http_err <- structure(
+    list(
+      message = "HTTP 401 Unauthorized",
+      resp = httr2::response(
+        status_code = 401,
+        headers = list(`content-type` = "application/json")
+      )
+    ),
+    class = c("httr2_http_401", "httr2_http", "error", "condition")
+  )
+
+  local_mocked_bindings(
+    req_perform_parallel = function(requests, paths, on_error = "continue") {
+      list(mock_http_err)
+    },
+    .package = "httr2"
+  )
+
+  expect_warning(
+    res <- otn_download(files = files_df, outdir = tmp_dir),
+    regexp = "requires authentication"
+  )
+
+  expect_equal(length(res), 0)
+})
+
+test_that("otn_download unwraps generic error objects with $resp (line 113)", {
+  setup_otn_env()
+  mock_otn_bindings()
+
+  tmp_dir <- tempfile(pattern = "mock_out_")
+  dir.create(tmp_dir)
+  on.exit(unlink(tmp_dir, recursive = TRUE), add = TRUE)
+
+  files_df <- data.frame(
+    url = "https://testthat.otn.org/files/data.parquet",
+    network = "testthat"
+  )
+
+  # Construct a generic error object (without httr2_http class) containing $resp
+  mock_generic_err <- structure(
+    list(
+      message = "Custom network error",
+      resp = httr2::response(
+        status_code = 403,
+        headers = list(`content-type` = "application/json")
+      )
+    ),
+    class = c("error", "condition")
+  )
+
+  local_mocked_bindings(
+    req_perform_parallel = function(requests, paths, on_error = "continue") {
+      list(mock_generic_err)
+    },
+    .package = "httr2"
+  )
+
+  expect_warning(
+    res <- otn_download(files = files_df, outdir = tmp_dir),
+    regexp = "requires authentication"
+  )
+
+  expect_equal(length(res), 0)
+})

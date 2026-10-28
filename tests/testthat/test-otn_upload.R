@@ -177,3 +177,40 @@ test_that("otn_upload routes multiple files through req_perform_parallel", {
   res <- otn_upload(c(tmp1, tmp2), project = "PROJ", network = "testthat")
   expect_equal(res, c(loc1, loc2))
 })
+
+test_that("otn_upload falls back to .otn_server_url when server_url is missing from otn_global", {
+  setup_otn_env(token = "mock_token")
+  mock_otn_bindings()
+
+  otn_glob <- asNamespace("otndata")$otn_global
+  otn_glob$testthat$server_url <- NULL
+
+  fallback_called <- FALSE
+
+  local_mocked_bindings(
+    is_logged_in = function(network) TRUE,
+    .otn_server_url = function(network, set = FALSE) {
+      fallback_called <<- TRUE
+      "https://fallback.otn.org"
+    },
+    .package = "otndata"
+  )
+
+  tmp_file <- tempfile(fileext = ".csv")
+  writeLines("col1,col2\n1,2", tmp_file)
+  on.exit(unlink(tmp_file), add = TRUE)
+
+  mock_req_perform_json(
+    status_code = 201,
+    headers = list(
+      Location = "https://fallback.otn.org/data/repository/PROJ/to-be-filed/file.csv"
+    ),
+    validate_req = function(req) {
+      expect_true(grepl("^https://fallback\\.otn\\.org", req$url))
+    }
+  )
+
+  otn_upload(tmp_file, project = "PROJ", network = "testthat")
+
+  expect_true(fallback_called)
+})

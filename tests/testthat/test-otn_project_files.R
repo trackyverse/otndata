@@ -121,3 +121,33 @@ test_that("otn_project_files handles empty search results cleanly", {
     )
   )
 })
+
+test_that(".otn_files falls back to .otn_server_url when server_url is missing from otn_global", {
+  setup_otn_env()
+  mock_otn_bindings()
+
+  # Remove server_url from global state to trigger fallback
+  otn_glob <- asNamespace("otndata")$otn_global
+  otn_glob$testthat$server_url <- NULL
+
+  fallback_called <- FALSE
+
+  local_mocked_bindings(
+    .otn_server_url = function(network, set = FALSE) {
+      fallback_called <<- TRUE
+      "https://fallback.otn.org"
+    },
+    .package = "otndata"
+  )
+
+  mock_req_perform_json(
+    body_json = '{"items": []}',
+    validate_req = function(req) {
+      expect_true(grepl("^https://fallback\\.otn\\.org", req$url))
+    }
+  )
+
+  otn_project_files("PROJ", network = "testthat")
+
+  expect_true(fallback_called)
+})
