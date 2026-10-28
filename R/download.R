@@ -40,6 +40,36 @@ otn_download <- function(files = NULL, urls = NULL, outdir = '.') {
       httr2::req_throttle(capacity = 2, fill_time_s = 1)
   }
 
+  # Helper function to check if HTML is returned (means a login is needed)
+  is_html_file <- function(file_path, response = NULL) {
+    # 1. Primary check: Plone returns Content-Type "text/html" for login pages
+    if (!is.null(response) && inherits(response, "httr2_response")) {
+      ct <- httr2::resp_header(response, "content-type", default = "")
+      if (grepl("text/html", ct, ignore.case = TRUE)) {
+        return(TRUE)
+      }
+    }
+
+    # 2. Fallback check: Read first 5 lines using latin1 encoding to prevent multibyte errors
+    if (file.exists(file_path) && file.info(file_path)$size > 0) {
+      first_lines <- suppressWarnings(
+        readLines(file_path, n = 5, encoding = "latin1", warn = FALSE)
+      )
+      if (
+        any(grepl(
+          "<html|<!doctype",
+          first_lines,
+          ignore.case = TRUE,
+          useBytes = TRUE
+        ))
+      ) {
+        return(TRUE)
+      }
+    }
+
+    FALSE
+  }
+
   if (!dir.exists(outdir)) {
     dir.create(outdir)
 
@@ -131,39 +161,4 @@ otn_download <- function(files = NULL, urls = NULL, outdir = '.') {
   }
 
   invisible(file_locations)
-}
-
-#' Check if HTML file
-#'
-#' Helper function to check if the HTML error page of an unfound file has
-#' been returned
-#'
-#' @keywords utils internal
-is_html_file <- function(file_path, response = NULL) {
-  # 1. Primary check: Plone returns Content-Type "text/html" for login pages
-  if (!is.null(response) && inherits(response, "httr2_response")) {
-    ct <- httr2::resp_header(response, "content-type", default = "")
-    if (grepl("text/html", ct, ignore.case = TRUE)) {
-      return(TRUE)
-    }
-  }
-
-  # 2. Fallback check: Read first 5 lines using latin1 encoding to prevent multibyte errors
-  if (file.exists(file_path) && file.info(file_path)$size > 0) {
-    first_lines <- suppressWarnings(
-      readLines(file_path, n = 5, encoding = "latin1", warn = FALSE)
-    )
-    if (
-      any(grepl(
-        "<html|<!doctype",
-        first_lines,
-        ignore.case = TRUE,
-        useBytes = TRUE
-      ))
-    ) {
-      return(TRUE)
-    }
-  }
-
-  FALSE
 }
