@@ -9,8 +9,7 @@ test_that("otn_login succeeds when valid credentials exist in Sys.getenv()", {
     Sys.unsetenv("OTN_PASS.testthat")
   })
 
-  # Mock external package bindings
-  mock_req_perform_error(status_code = 401, throw_condition = TRUE)
+  mock_req_perform_json(body_json = '{"token": "mocked_jwt_token_123"}')
 
   otn_login("testthat")
   otn_glob <- asNamespace("otndata")$otn_global
