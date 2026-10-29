@@ -5,6 +5,7 @@
 #' @inheritParams .otn_server_url
 #' @returns Silently returns a vector of file locations.
 #' @importFrom stats runif
+#' @export
 #'
 #' @seealso
 #'  * Plone REST API documentation:
