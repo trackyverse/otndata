@@ -26,7 +26,7 @@ test_that("otn_tag_summary executes directly when local matched file is provided
   passed_matched <- NULL
 
   local_mocked_bindings(
-    make_tag_push_summary = function(matched, ...) {
+    make_tag_summary = function(matched, ...) {
       passed_matched <<- matched
       "tag_summary_report.html"
     },
@@ -60,7 +60,7 @@ test_that("otn_tag_summary downloads matched detections and warns on external pa
   )
 
   local_mocked_bindings(
-    make_tag_push_summary = function(matched, ...) {
+    make_tag_summary = function(matched, ...) {
       "tag_summary_report.html"
     },
     .package = "otndo"

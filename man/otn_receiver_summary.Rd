@@ -29,7 +29,7 @@ or your node does not use an OTN-style Plone CMS.}
 "otn_devel" (the OTN development server). Note that "etn", "fact", "glatos",
 "path" and "raft" are accepted, but only to produce an error and redirect you.}
 
-\item{...}{Arguments passed to \code{otndo::make_receiver_push_summary}}
+\item{...}{Arguments passed to \code{otndo::make_receiver_summary}}
 }
 \description{
 Create summary reports of receiver project data from the OTN data push.

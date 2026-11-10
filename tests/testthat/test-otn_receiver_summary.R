@@ -31,7 +31,7 @@ test_that("otn_receiver_summary executes directly when local files are supplied"
   called_args <- NULL
 
   local_mocked_bindings(
-    make_receiver_push_summary = function(
+    make_receiver_summary = function(
       qualified,
       unqualified,
       deployment,
@@ -92,7 +92,7 @@ test_that("otn_receiver_summary fetches and downloads missing extract and deploy
 
   passed_to_otndo <- NULL
   local_mocked_bindings(
-    make_receiver_push_summary = function(
+    make_receiver_summary = function(
       qualified,
       unqualified,
       deployment,

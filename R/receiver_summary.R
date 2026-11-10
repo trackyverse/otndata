@@ -6,7 +6,7 @@
 #'   qualified/unqualified detections if you do not wish to download your files
 #'   or your node does not use an OTN-style Plone CMS.
 #' @param deployment File path of user-supplied master OTN receiver deployment metadata.
-#' @param ... Arguments passed to \code{otndo::make_receiver_push_summary}
+#' @param ... Arguments passed to \code{otndo::make_receiver_summary}
 #' @inheritParams otn_extract_files
 #' @inheritParams .otn_server_url
 #'
@@ -114,7 +114,7 @@ otn_receiver_summary <- function(
     )
   }
 
-  otndo::make_receiver_push_summary(
+  otndo::make_receiver_summary(
     qualified = qualified,
     unqualified = unqualified,
     deployment = deployment,

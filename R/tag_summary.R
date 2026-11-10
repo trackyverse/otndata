@@ -6,7 +6,7 @@
 #'   or your node does not use an OTN-style Plone CMS, this argument also accepts
 #'   a character vector of file paths of your matched detections. These can be
 #'   parquet, CSVs, or zipped folders.
-#' @param ... Arguments passed to \code{otndo::make_tag_push_summary}
+#' @param ... Arguments passed to \code{otndo::make_tag_summary}
 #' @inheritParams .otn_server_url
 #'
 #' @export
@@ -62,5 +62,5 @@ otn_tag_summary <- function(
     }
   }
 
-  otndo::make_tag_push_summary(matched = matched, ...)
+  otndo::make_tag_summary(matched = matched, ...)
 }
