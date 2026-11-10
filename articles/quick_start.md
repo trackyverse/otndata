@@ -177,7 +177,7 @@ otn_extract_files(
 ) |>
   otn_download(outdir = "./my_awesome_detections")
 #> ℹ Directory created: ./my_awesome_detections.
-#> ✔ 1 file(s) saved to '
+#> ✔ 1 file(s) saved to './my_awesome_detections/tailwinds_qualified_detections.parquet'.
 ```
 
 Create a database on the fly using the [arrow

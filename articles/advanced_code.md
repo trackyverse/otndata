@@ -26,7 +26,7 @@ otn_list_projects("mine", network = "act") |>
   lapply(otn_extract_files, text = "matched parquet", network = "act") |>
   do.call(rbind, args = _) |>
   otn_download(outdir = td)
-#> ✔ 5 file(s) saved to '
+#> ✔ 5 file(s) saved to '/tmp/RtmpX4D7Bo/detections/hudrsb_matched_detections.parquet', '/tmp/RtmpX4D7Bo/detections/mdbsb_matched_detections.parquet', '/tmp/RtmpX4D7Bo/detections/mdwea_matched_detections.parquet', '/tmp/RtmpX4D7Bo/detections/pasbt_matched_detections.parquet', and '/tmp/RtmpX4D7Bo/detections/paxsb08_matched_detections.parquet'.
 
 db <- arrow::open_dataset(td)
 db |>

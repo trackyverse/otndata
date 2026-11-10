@@ -33,7 +33,7 @@ otn_tag_summary(project = NULL, matched = NULL, network = NULL, ...)
 - ...:
 
   Arguments passed to
-  [`otndo::make_tag_push_summary`](https://otndo.obrien.page/reference/make_tag_push_summary.html)
+  [`otndo::make_tag_summary`](https://otndo.obrien.page/reference/make_tag_summary.html)
 
 ## Examples
 

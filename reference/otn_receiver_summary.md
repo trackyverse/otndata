@@ -44,7 +44,7 @@ otn_receiver_summary(
 - ...:
 
   Arguments passed to
-  [`otndo::make_receiver_push_summary`](https://otndo.obrien.page/reference/make_receiver_push_summary.html)
+  [`otndo::make_receiver_summary`](https://otndo.obrien.page/reference/make_receiver_summary.html)
 
 ## No files provided
 
